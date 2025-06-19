@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "@nxrocks/nx-spring-boot": "^11.0.1"
+  }
+}
