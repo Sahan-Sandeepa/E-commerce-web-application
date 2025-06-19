@@ -2,4 +2,6 @@ node_modules
 .nx
 .angular
 .nx.json
-.etitorconfig
+.editorconfig
+.vscode/
+package-lock.json
