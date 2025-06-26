@@ -66,7 +66,7 @@
       "style": "scss"
     }
   },
-  "plugins": [
+   "plugins": [
     {
       "plugin": "@nxrocks/nx-spring-boot",
       "options": {
@@ -83,5 +83,13 @@
         "buildInfoTargetName": "build-info"
       }
     }
-  ]
+  ],
+  "projects": {
+    "ecom-frontend": {
+      "tags": []
+    },
+    "ecom-backend": {
+      "tags": []
+    }
+  }
 }
