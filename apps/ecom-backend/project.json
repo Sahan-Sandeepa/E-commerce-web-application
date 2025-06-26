@@ -1,0 +1,16 @@
+{
+  "name": "ecom-backend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/ecom-backend/src",
+  "projectType": "application",
+  "targets": {
+    "serve": {
+      "executor": "@nxrocks/nx-spring-boot:run",
+      "options": {
+        "root": "apps/ecom-backend",
+        "args": ["-Dspring-boot.run.profiles=local"],
+        "useWrapper": false
+      }
+    }
+  }
+}
