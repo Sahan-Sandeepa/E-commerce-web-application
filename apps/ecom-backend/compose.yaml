@@ -9,3 +9,7 @@ services:
       - 'POSTGRES_PASSWORD=codecake'
     volumes:
       - '~/volumes/codecake-yt/postgres:/var/lib/postgresql/data'
+spring:
+  docker:
+    compose:
+      enabled: false

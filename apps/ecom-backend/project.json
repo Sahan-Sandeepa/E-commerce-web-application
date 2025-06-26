@@ -9,7 +9,7 @@
       "options": {
         "root": "apps/ecom-backend",
         "args": ["-Dspring-boot.run.profiles=local"],
-        "useWrapper": false
+        "ignoreWrapper": true
       }
     }
   }
