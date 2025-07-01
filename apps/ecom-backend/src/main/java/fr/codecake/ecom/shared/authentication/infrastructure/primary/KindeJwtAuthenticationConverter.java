@@ -1,4 +1,4 @@
-package main.java.fr.codecake.ecom.shared.authentication.infrastructure.primary;
+package fr.codecake.ecom.shared.authentication.infrastructure.primary;
 
 import fr.codecake.ecom.shared.authentication.application.AuthenticatedUser;
 import org.springframework.core.convert.converter.Converter;

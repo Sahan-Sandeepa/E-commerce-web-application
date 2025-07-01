@@ -1,4 +1,4 @@
-package main.java.fr.codecake.ecom.order.domain.order;
+package fr.codecake.ecom.order.domain.order;
 
 public class CartPaymentException extends RuntimeException {
   public CartPaymentException(String message) {

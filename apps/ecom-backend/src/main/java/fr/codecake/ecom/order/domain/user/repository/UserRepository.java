@@ -1,7 +1,6 @@
-package main.java.fr.codecake.ecom.order.domain.user.repository;
+package fr.codecake.ecom.order.domain.user.repository;
 
 import fr.codecake.ecom.order.domain.user.aggregate.User;
-import fr.codecake.ecom.order.domain.user.vo.UserAddress;
 import fr.codecake.ecom.order.domain.user.vo.UserAddressToUpdate;
 import fr.codecake.ecom.order.domain.user.vo.UserEmail;
 import fr.codecake.ecom.order.domain.user.vo.UserPublicId;

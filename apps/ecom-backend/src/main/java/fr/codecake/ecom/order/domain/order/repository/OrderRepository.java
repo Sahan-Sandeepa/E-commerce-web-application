@@ -1,4 +1,4 @@
-package main.java.fr.codecake.ecom.order.domain.order.repository;
+package fr.codecake.ecom.order.domain.order.repository;
 
 import fr.codecake.ecom.order.domain.order.aggregate.Order;
 import fr.codecake.ecom.order.domain.order.aggregate.StripeSessionInformation;

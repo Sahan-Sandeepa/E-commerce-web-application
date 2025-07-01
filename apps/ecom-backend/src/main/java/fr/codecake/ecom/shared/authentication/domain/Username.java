@@ -1,8 +1,8 @@
-package main.java.fr.codecake.ecom.shared.authentication.domain;
+package fr.codecake.ecom.shared.authentication.domain;
 
 
 
-import fr.codecake.ecom.shared.error.domain.Assert;
+import fr.codecake.ecom.shared.authentication.error.domain.Assert;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Optional;

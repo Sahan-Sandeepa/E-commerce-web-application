@@ -1,6 +1,12 @@
-package main.java.fr.codecake.ecom.order.application;
+package fr.codecake.ecom.order.application;
 
-import fr.codecake.ecom.order.domain.order.aggregate.*;
+import fr.codecake.ecom.order.domain.order.aggregate.DetailCartItemRequest;
+import fr.codecake.ecom.order.domain.order.aggregate.DetailCartRequest;
+import fr.codecake.ecom.order.domain.order.aggregate.DetailCartResponse;
+import fr.codecake.ecom.order.domain.order.aggregate.Order;
+import fr.codecake.ecom.order.domain.order.aggregate.OrderProductQuantity;
+import fr.codecake.ecom.order.domain.order.aggregate.OrderedProduct;
+import fr.codecake.ecom.order.domain.order.aggregate.StripeSessionInformation;
 import fr.codecake.ecom.order.domain.order.repository.OrderRepository;
 import fr.codecake.ecom.order.domain.order.service.CartReader;
 import fr.codecake.ecom.order.domain.order.service.OrderCreator;

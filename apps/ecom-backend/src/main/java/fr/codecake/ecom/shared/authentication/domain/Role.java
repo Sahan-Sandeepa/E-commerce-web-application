@@ -1,6 +1,6 @@
-package main.java.fr.codecake.ecom.shared.authentication.domain;
+package fr.codecake.ecom.shared.authentication.domain;
 
-import fr.codecake.ecom.shared.error.domain.Assert;
+import fr.codecake.ecom.shared.authentication.error.domain.Assert;
 
 import java.util.Map;
 import java.util.function.Function;

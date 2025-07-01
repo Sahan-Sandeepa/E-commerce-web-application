@@ -1,4 +1,4 @@
-package main.java.fr.codecake.ecom.wire.postgresql.infrastructure;
+package fr.codecake.ecom.wire.postgresql.infrastructure;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

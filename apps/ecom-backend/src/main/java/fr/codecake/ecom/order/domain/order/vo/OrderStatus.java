@@ -1,4 +1,4 @@
-package main.java.fr.codecake.ecom.order.domain.order.vo;
+package fr.codecake.ecom.order.domain.order.vo;
 
 public enum OrderStatus {
 

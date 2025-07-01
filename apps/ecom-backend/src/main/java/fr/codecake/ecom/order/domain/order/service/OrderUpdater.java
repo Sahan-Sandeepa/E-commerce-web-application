@@ -1,6 +1,10 @@
-package main.java.fr.codecake.ecom.order.domain.order.service;
+package fr.codecake.ecom.order.domain.order.service;
 
-import fr.codecake.ecom.order.domain.order.aggregate.*;
+import fr.codecake.ecom.order.domain.order.aggregate.Order;
+import fr.codecake.ecom.order.domain.order.aggregate.OrderProductQuantity;
+import fr.codecake.ecom.order.domain.order.aggregate.OrderProductQuantityBuilder;
+import fr.codecake.ecom.order.domain.order.aggregate.OrderedProduct;
+import fr.codecake.ecom.order.domain.order.aggregate.StripeSessionInformation;
 import fr.codecake.ecom.order.domain.order.repository.OrderRepository;
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
-package main.java.fr.codecake.ecom.order.domain.order.vo;
+package fr.codecake.ecom.order.domain.order.vo;
 
-import fr.codecake.ecom.shared.error.domain.Assert;
+import fr.codecake.ecom.shared.authentication.error.domain.Assert;
 
 import java.util.UUID;
 
