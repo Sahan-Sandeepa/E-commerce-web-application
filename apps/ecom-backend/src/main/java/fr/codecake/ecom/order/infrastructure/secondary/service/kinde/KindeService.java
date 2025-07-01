@@ -49,7 +49,7 @@ public class KindeService {
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
         .header("Authorization",
           "Basic " + Base64.getEncoder().encodeToString((clientId + ":" + clientSecret).getBytes(StandardCharsets.UTF_8)))
-        .header("Content-Type", ContentType.APPLICATION_FORM_URLENCODED.getMimeType())
+        .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE)
         .retrieve()
         .toEntity(KindeAccessToken.class);
       return Optional.of(accessToken.getBody().accessToken());
