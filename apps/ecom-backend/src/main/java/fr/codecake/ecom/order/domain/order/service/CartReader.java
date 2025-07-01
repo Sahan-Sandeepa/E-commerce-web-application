@@ -1,4 +1,4 @@
-package main.java.fr.codecake.ecom.order.domain.order.service;
+package fr.codecake.ecom.order.domain.order.service;
 
 import fr.codecake.ecom.order.domain.order.aggregate.DetailCartResponse;
 import fr.codecake.ecom.order.domain.order.aggregate.DetailCartResponseBuilder;

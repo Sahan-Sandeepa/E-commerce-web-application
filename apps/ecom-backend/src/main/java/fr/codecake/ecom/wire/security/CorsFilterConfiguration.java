@@ -1,4 +1,4 @@
-package main.java.fr.codecake.ecom.wire.security;
+package fr.codecake.ecom.wire.security;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;

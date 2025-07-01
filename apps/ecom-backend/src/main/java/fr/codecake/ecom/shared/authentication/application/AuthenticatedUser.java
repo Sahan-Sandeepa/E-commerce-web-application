@@ -1,10 +1,10 @@
-package main.java.fr.codecake.ecom.shared.authentication.application;
+package fr.codecake.ecom.shared.authentication.application;
 
 import com.nimbusds.jose.shaded.gson.internal.LinkedTreeMap;
 import fr.codecake.ecom.shared.authentication.domain.Role;
 import fr.codecake.ecom.shared.authentication.domain.Roles;
 import fr.codecake.ecom.shared.authentication.domain.Username;
-import fr.codecake.ecom.shared.error.domain.Assert;
+import fr.codecake.ecom.shared.authentication.error.domain.Assert;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

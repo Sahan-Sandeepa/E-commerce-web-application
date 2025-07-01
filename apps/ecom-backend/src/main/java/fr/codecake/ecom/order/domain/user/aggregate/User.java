@@ -1,7 +1,13 @@
-package main.java.fr.codecake.ecom.order.domain.user.aggregate;
+package fr.codecake.ecom.order.domain.user.aggregate;
 
-import fr.codecake.ecom.order.domain.user.vo.*;
-import fr.codecake.ecom.shared.error.domain.Assert;
+import fr.codecake.ecom.order.domain.user.vo.AuthorityName;
+import fr.codecake.ecom.order.domain.user.vo.UserAddress;
+import fr.codecake.ecom.order.domain.user.vo.UserEmail;
+import fr.codecake.ecom.order.domain.user.vo.UserFirstname;
+import fr.codecake.ecom.order.domain.user.vo.UserImageUrl;
+import fr.codecake.ecom.order.domain.user.vo.UserLastname;
+import fr.codecake.ecom.order.domain.user.vo.UserPublicId;
+import fr.codecake.ecom.shared.authentication.error.domain.Assert;
 import org.jilt.Builder;
 
 import java.time.Instant;

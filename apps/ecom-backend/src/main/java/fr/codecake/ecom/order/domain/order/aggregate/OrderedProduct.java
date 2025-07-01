@@ -1,4 +1,4 @@
-package main.java.fr.codecake.ecom.order.domain.order.aggregate;
+package fr.codecake.ecom.order.domain.order.aggregate;
 
 import fr.codecake.ecom.order.domain.order.vo.OrderPrice;
 import fr.codecake.ecom.order.domain.order.vo.OrderQuantity;

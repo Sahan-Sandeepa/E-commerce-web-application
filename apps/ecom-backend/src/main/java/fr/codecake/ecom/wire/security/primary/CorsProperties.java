@@ -1,4 +1,4 @@
-package main.java.fr.codecake.ecom.wire.security.primary;
+package fr.codecake.ecom.wire.security.primary;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;

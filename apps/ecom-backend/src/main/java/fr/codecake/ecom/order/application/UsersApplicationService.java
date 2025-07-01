@@ -1,4 +1,4 @@
-package main.java.fr.codecake.ecom.order.application;
+package fr.codecake.ecom.order.application;
 
 import fr.codecake.ecom.order.domain.user.aggregate.User;
 import fr.codecake.ecom.order.domain.user.repository.UserRepository;
