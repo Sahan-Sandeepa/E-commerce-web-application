@@ -2,7 +2,6 @@ package fr.codecake.ecom.order.infrastructure.secondary.service.stripe;
 
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
-import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 import fr.codecake.ecom.order.domain.order.CartPaymentException;
 import fr.codecake.ecom.order.domain.order.aggregate.DetailCartItemRequest;
