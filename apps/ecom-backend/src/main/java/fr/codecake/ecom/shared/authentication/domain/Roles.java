@@ -1,7 +1,7 @@
 package fr.codecake.ecom.shared.authentication.domain;
 
 
-import fr.codecake.ecom.shared.authentication.error.domain.Assert;
+import fr.codecake.ecom.shared.error.domain.Assert;
 
 import java.util.Collections;
 import java.util.Set;

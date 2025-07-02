@@ -1,7 +1,13 @@
 package fr.codecake.ecom.product.domain.aggregate;
 
-import fr.codecake.ecom.product.domain.vo.*;
-import fr.codecake.ecom.shared.authentication.error.domain.Assert;
+import fr.codecake.ecom.product.domain.vo.ProductBrand;
+import fr.codecake.ecom.product.domain.vo.ProductColor;
+import fr.codecake.ecom.product.domain.vo.ProductDescription;
+import fr.codecake.ecom.product.domain.vo.ProductName;
+import fr.codecake.ecom.product.domain.vo.ProductPrice;
+import fr.codecake.ecom.product.domain.vo.ProductSize;
+import fr.codecake.ecom.product.domain.vo.PublicId;
+import fr.codecake.ecom.shared.error.domain.Assert;
 import org.jilt.Builder;
 
 import java.util.List;

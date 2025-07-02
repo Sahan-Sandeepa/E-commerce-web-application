@@ -11,6 +11,7 @@ import fr.codecake.ecom.product.domain.aggregate.Product;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import com.stripe.model.checkout.Session;
 
 import java.math.BigDecimal;
 import java.util.List;

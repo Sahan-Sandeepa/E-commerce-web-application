@@ -7,7 +7,7 @@ import fr.codecake.ecom.order.domain.user.vo.UserFirstname;
 import fr.codecake.ecom.order.domain.user.vo.UserImageUrl;
 import fr.codecake.ecom.order.domain.user.vo.UserLastname;
 import fr.codecake.ecom.order.domain.user.vo.UserPublicId;
-import fr.codecake.ecom.shared.authentication.error.domain.Assert;
+import fr.codecake.ecom.shared.error.domain.Assert;
 import org.jilt.Builder;
 
 import java.time.Instant;
