@@ -2,6 +2,8 @@ package fr.codecake.ecom.order.infrastructure.primary.order;
 
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.model.StripeObject;
+import com.stripe.model.Event;
+import com.stripe.model.checkout.Session;
 import com.stripe.net.Webhook;
 import fr.codecake.ecom.order.application.OrderApplicationService;
 import fr.codecake.ecom.order.domain.order.CartPaymentException;
@@ -20,7 +22,8 @@ import fr.codecake.ecom.order.domain.user.vo.UserAddressToUpdateBuilder;
 import fr.codecake.ecom.order.domain.user.vo.UserPublicId;
 import fr.codecake.ecom.product.domain.vo.PublicId;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails.Address;
+// import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails.Address;
+import com.stripe.model.Address;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
