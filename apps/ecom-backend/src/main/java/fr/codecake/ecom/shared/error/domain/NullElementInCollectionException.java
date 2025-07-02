@@ -1,4 +1,4 @@
-package fr.codecake.ecom.shared.authentication.error.domain;
+package fr.codecake.ecom.shared.error.domain;
 
 public class NullElementInCollectionException extends AssertionException {
 

@@ -1,6 +1,6 @@
 package fr.codecake.ecom.product.domain.vo;
 
-import fr.codecake.ecom.shared.authentication.error.domain.NotAColorException;
+import fr.codecake.ecom.shared.error.domain.NotAColorException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

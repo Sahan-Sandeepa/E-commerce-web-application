@@ -1,6 +1,6 @@
 package fr.codecake.ecom.order.domain.user.vo;
 
-import fr.codecake.ecom.shared.authentication.error.domain.Assert;
+import fr.codecake.ecom.shared.error.domain.Assert;
 import org.jilt.Builder;
 
 @Builder
