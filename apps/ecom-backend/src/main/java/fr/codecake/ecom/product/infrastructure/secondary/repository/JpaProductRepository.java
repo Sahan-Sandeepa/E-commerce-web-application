@@ -1,6 +1,5 @@
 package fr.codecake.ecom.product.infrastructure.secondary.repository;
 
-import fr.codecake.ecom.product.domain.aggregate.Product;
 import fr.codecake.ecom.product.domain.vo.ProductSize;
 import fr.codecake.ecom.product.infrastructure.secondary.entity.ProductEntity;
 import org.springframework.data.domain.Page;

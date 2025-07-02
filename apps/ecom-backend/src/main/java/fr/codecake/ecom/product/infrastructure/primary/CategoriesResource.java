@@ -4,7 +4,6 @@ import fr.codecake.ecom.product.application.ProductsApplicationService;
 import fr.codecake.ecom.product.domain.aggregate.Category;
 import fr.codecake.ecom.product.domain.vo.PublicId;
 import jakarta.persistence.EntityNotFoundException;
-import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -14,10 +13,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static fr.codecake.ecom.product.infrastructure.primary.ProductsAdminResource.ROLE_ADMIN;
 

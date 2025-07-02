@@ -7,7 +7,6 @@ import fr.codecake.ecom.order.domain.user.vo.UserFirstname;
 import fr.codecake.ecom.order.domain.user.vo.UserImageUrl;
 import fr.codecake.ecom.order.domain.user.vo.UserLastname;
 import fr.codecake.ecom.order.domain.user.vo.UserPublicId;
-import fr.codecake.ecom.shared.error.domain.Assert;
 import org.jilt.Builder;
 
 import java.time.Instant;
@@ -56,12 +55,12 @@ public class User {
     this.lastSeen = lastSeen;
   }
 
-  private void assertMandatoryFields() {
-    Assert.notNull("lastname", lastname);
-    Assert.notNull("firstname", firstname);
-    Assert.notNull("email", email);
-    Assert.notNull("authorities", authorities);
-  }
+  // private void assertMandatoryFields() {
+  //   Assert.notNull("lastname", lastname);
+  //   Assert.notNull("firstname", firstname);
+  //   Assert.notNull("email", email);
+  //   Assert.notNull("authorities", authorities);
+  // }
 
   public void updateFromUser(User user) {
     this.email = user.email;
