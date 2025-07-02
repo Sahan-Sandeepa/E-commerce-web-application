@@ -2,7 +2,13 @@ package fr.codecake.ecom.product.infrastructure.primary;
 
 import fr.codecake.ecom.product.domain.aggregate.Product;
 import fr.codecake.ecom.product.domain.aggregate.ProductBuilder;
-import fr.codecake.ecom.product.domain.vo.*;
+import fr.codecake.ecom.product.domain.vo.ProductBrand;
+import fr.codecake.ecom.product.domain.vo.ProductColor;
+import fr.codecake.ecom.product.domain.vo.ProductDescription;
+import fr.codecake.ecom.product.domain.vo.ProductName;
+import fr.codecake.ecom.product.domain.vo.ProductPrice;
+import fr.codecake.ecom.product.domain.vo.ProductSize;
+import fr.codecake.ecom.product.domain.vo.PublicId;
 import org.jilt.Builder;
 
 import java.util.List;

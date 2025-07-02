@@ -1,6 +1,5 @@
 package fr.codecake.ecom.shared.authentication.infrastructure.primary;
 
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -19,10 +18,10 @@ public class SecurityConfiguration {
   public SecurityFilterChain configure(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(authorize ->
         authorize
-          .requestMatchers(HttpMethod.GET, "api/categories").permitAll()
-          .requestMatchers(HttpMethod.GET, "api/products-shop/**").permitAll()
-          .requestMatchers(HttpMethod.GET, "api/orders/get-cart-details").permitAll()
-          .requestMatchers(HttpMethod.POST, "api/orders/webhook").permitAll()
+          .requestMatchers(HttpMethod.GET, "/api/categories").permitAll()
+          .requestMatchers(HttpMethod.GET, "/api/products-shop/**").permitAll()
+          .requestMatchers(HttpMethod.GET, "/api/orders/get-cart-details").permitAll()
+          .requestMatchers(HttpMethod.POST, "/api/orders/webhook").permitAll()
           .requestMatchers("/api/**").authenticated())
       .csrf(AbstractHttpConfigurer::disable)
       .oauth2ResourceServer(

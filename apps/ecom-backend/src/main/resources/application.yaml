@@ -5,17 +5,20 @@ logging:
     fr.codecake.ecom: INFO
 
 spring:
-  application:
-    name: Ecommerce Backend
-  threads:
-    virtual:
-      enabled: true
   datasource:
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
     hikari:
       poolName: Hikari
       auto-commit: false
     driver-class-name: org.postgresql.Driver
     type: com.zaxxer.hikari.HikariDataSource
+
+  docker:
+    compose:
+      enabled: false
+
   data:
     jpa:
       repositories:
