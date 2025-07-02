@@ -1,6 +1,5 @@
 package fr.codecake.ecom.order.infrastructure.primary.order;
 
-import fr.codecake.ecom.order.RestStripeSessionBuilder;
 import fr.codecake.ecom.order.domain.order.vo.StripeSessionId;
 import org.jilt.Builder;
 
