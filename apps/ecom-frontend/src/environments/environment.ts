@@ -4,7 +4,7 @@ export const environment = {
     redirectUrl: 'http://localhost:4200',
     postLogoutRedirectUri: 'http://localhost:4200',
     clientId: 'f870e5ab3b524965b6c9b9c907c230c1',
-    audience: 'https://codecake.kinde.com/api',
+    audience: 'http://localhost:8080/api',
   },
   apiUrl: 'http://localhost:8080/api',
   stripePublishableKey:
