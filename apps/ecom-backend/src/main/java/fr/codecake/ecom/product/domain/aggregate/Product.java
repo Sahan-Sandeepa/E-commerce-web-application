@@ -7,7 +7,7 @@ import fr.codecake.ecom.product.domain.vo.ProductName;
 import fr.codecake.ecom.product.domain.vo.ProductPrice;
 import fr.codecake.ecom.product.domain.vo.ProductSize;
 import fr.codecake.ecom.product.domain.vo.PublicId;
-import fr.codecake.ecom.shared.error.domain.Assert;
+// import fr.codecake.ecom.shared.error.domain.Assert;
 import org.jilt.Builder;
 
 import java.util.List;
@@ -44,27 +44,27 @@ public class Product {
     this.nbInStock = nbInStock;
   }
 
-  private void assertMandatoryFields(ProductBrand brand,
-                                     ProductColor color,
-                                     ProductDescription description,
-                                     ProductName name,
-                                     ProductPrice price,
-                                     ProductSize size,
-                                     Category category,
-                                     List<Picture> pictures,
-                                     boolean featured,
-                                     int nbInStock) {
-    Assert.notNull("brand", brand);
-    Assert.notNull("color", color);
-    Assert.notNull("description", description);
-    Assert.notNull("name", name);
-    Assert.notNull("price", price);
-    Assert.notNull("size", size);
-    Assert.notNull("category", category);
-    Assert.notNull("pictures", pictures);
-    Assert.notNull("featured", featured);
-    Assert.notNull("nbInStock", nbInStock);
-  }
+  // private void assertMandatoryFields(ProductBrand brand,
+  //                                    ProductColor color,
+  //                                    ProductDescription description,
+  //                                    ProductName name,
+  //                                    ProductPrice price,
+  //                                    ProductSize size,
+  //                                    Category category,
+  //                                    List<Picture> pictures,
+  //                                    boolean featured,
+  //                                    int nbInStock) {
+  //   Assert.notNull("brand", brand);
+  //   Assert.notNull("color", color);
+  //   Assert.notNull("description", description);
+  //   Assert.notNull("name", name);
+  //   Assert.notNull("price", price);
+  //   Assert.notNull("size", size);
+  //   Assert.notNull("category", category);
+  //   Assert.notNull("pictures", pictures);
+  //   Assert.notNull("featured", featured);
+  //   Assert.notNull("nbInStock", nbInStock);
+  // }
 
   public void initDefaultFields() {
     this.publicId = new PublicId(UUID.randomUUID());

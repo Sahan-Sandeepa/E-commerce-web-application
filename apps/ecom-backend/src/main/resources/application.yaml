@@ -12,7 +12,7 @@ spring:
     hikari:
       poolName: Hikari
       auto-commit: false
-    driver-class-name: org.postgresql.Driver
+    driver-class-name: ${DRIVER_CLASSNAME}
     type: com.zaxxer.hikari.HikariDataSource
 
   docker:
@@ -45,7 +45,7 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
     open-in-view: false
   liquibase:
-    change-log: classpath:db/changelog/master.xml
+    change-log: ${LIQUIBASE_PATH}
     default-schema: ecommerce_yt
     contexts: dev
   #    drop-first: true
@@ -80,7 +80,7 @@ application:
     allow-credentials: false
     max-age: 300
   kinde:
-    api: https://codecake.kinde.com
+    api: https://ecomcodecake.kinde.com
     client-id: ${KINDE_CLIENT_ID}
     client-secret: ${KINDE_CLIENT_SECRET}
     audience: https://codecake.kinde.com/api

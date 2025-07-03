@@ -1,5 +1,6 @@
 package fr.codecake.ecom.order.infrastructure.secondary.service.kinde;
 
+import org.apache.hc.core5.http.ContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,7 +47,7 @@ public class KindeService {
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
         .header("Authorization",
           "Basic " + Base64.getEncoder().encodeToString((clientId + ":" + clientSecret).getBytes(StandardCharsets.UTF_8)))
-        .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+        .header("Content-Type", ContentType.APPLICATION_FORM_URLENCODED.getMimeType())
         .retrieve()
         .toEntity(KindeAccessToken.class);
       return Optional.of(accessToken.getBody().accessToken());
