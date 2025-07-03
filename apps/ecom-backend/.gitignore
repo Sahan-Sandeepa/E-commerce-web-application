@@ -36,3 +36,4 @@ build/
 application.yaml
 application.properties
 application-test.properties
+.env
