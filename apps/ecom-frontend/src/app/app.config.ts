@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
@@ -7,12 +7,13 @@ import { environment } from '../environments/environment';
 import { AbstractSecurityStorage, authInterceptor, LogLevel, provideAuth } from 'angular-auth-oidc-client';
 import { provideQueryClient, QueryClient } from '@tanstack/angular-query-experimental';
 import { SsrStorageService } from './auth/ssr-storage.service';
+import { provideNgxStripe } from 'ngx-stripe';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideClientHydration(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(appRoutes),
+    provideRouter(appRoutes, withComponentInputBinding()),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor()])),
     provideAuth({
       config: {
@@ -36,7 +37,3 @@ export const appConfig: ApplicationConfig = {
     provideNgxStripe(environment.stripePublishableKey),
   ],
 };
-function provideNgxStripe(stripePublishableKey: string): import("@angular/core").Provider | import("@angular/core").EnvironmentProviders {
-  throw new Error('Function not implemented.');
-}
-
