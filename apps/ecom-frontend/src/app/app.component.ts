@@ -4,6 +4,7 @@ import { FaConfig, FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular
 import { fontAwesomeIcons } from './shared/font-awesome-icons';
 import { isPlatformBrowser } from '@angular/common';
 import { Oauth2Service } from './auth/oauth2.service';
+import { ToastService } from './shared/toast/toast.service';
 
 @Component({
   standalone: true,
@@ -18,7 +19,7 @@ export class AppComponent implements OnInit {
 
   private oauth2Service = inject(Oauth2Service);
 
-  // toastService = inject(ToastService);
+  toastService = inject(ToastService);
 
   platformId = inject(PLATFORM_ID);
 
