@@ -14,7 +14,7 @@ import { CartService } from '../../shop/cart.service';
   standalone: true,
   imports: [CommonModule, RouterLink, FaIconComponent, ClickOutside],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css',
+  styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent implements OnInit {
   oauth2Service = inject(Oauth2Service);
