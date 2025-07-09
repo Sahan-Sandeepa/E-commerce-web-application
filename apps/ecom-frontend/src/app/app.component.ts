@@ -2,13 +2,13 @@ import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FaConfig, FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fontAwesomeIcons } from './shared/font-awesome-icons';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { Oauth2Service } from './auth/oauth2.service';
 import { ToastService } from './shared/toast/toast.service';
 
 @Component({
   standalone: true,
-  imports: [RouterModule, FontAwesomeModule],
+  imports: [RouterModule, FontAwesomeModule, CommonModule],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
