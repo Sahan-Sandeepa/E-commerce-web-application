@@ -1,14 +1,13 @@
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CommonModule } from '@angular/common';
-import { NavbarComponent } from './layout/navbar/navbar.component';
-import { FooterComponent } from './layout/footer/footer.component';
-import { FaConfig, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { fontAwesomeIcons } from './shared/font-awesome-icons';
+import { FaConfig, FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faFacebook, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons';
+import { faCartShopping, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import { Oauth2Service } from './auth/oauth2.service';
+import { FooterComponent } from './layout/footer/footer.component';
+import { NavbarComponent } from './layout/navbar/navbar.component';
 import { ToastService } from './shared/toast/toast.service';
-import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   standalone: true,
@@ -17,7 +16,7 @@ import { isPlatformBrowser } from '@angular/common';
     FontAwesomeModule,
     CommonModule,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
   ],
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -42,7 +41,13 @@ export class AppComponent implements OnInit {
   }
 
   private initFontAwesome() {
-    this.faConfig.defaultPrefix = 'far';
-    this.faIconLibrary.addIcons(...fontAwesomeIcons);
+    this.faConfig.defaultPrefix = 'fas';
+    this.faIconLibrary.addIcons(
+      faCartShopping,
+      faTruckFast,
+      faTwitter,
+      faYoutube,
+      faFacebook
+    );
   }
 }
