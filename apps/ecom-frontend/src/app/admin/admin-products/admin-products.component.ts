@@ -1,13 +1,13 @@
 import { Component, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdminProductService } from '../../admin-product.service';
-import { ToastService } from '../../../shared/toast/toast.service';
+import { AdminProductService } from '../admin-product.service';
+import { ToastService } from '../../shared/toast/toast.service';
 import {
   injectMutation,
   injectQuery,
   injectQueryClient,
 } from '@tanstack/angular-query-experimental';
-import { Pagination } from '../../../shared/model/request.model';
+import { Pagination } from '../../shared/model/request.model';
 import { lastValueFrom } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
