@@ -21,7 +21,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@ng-web-apis/common": "^4.12.0",
     "@ng-web-apis/universal": "^4.12.0",
-    "@stripe/stripe-js": "^7.4.0",
+    "@stripe/stripe-js": "^4.10.0",
     "@tanstack/angular-query-devtools-experimental": "^5.54.1",
     "@tanstack/angular-query-experimental": "^5.81.5",
     "angular-auth-oidc-client": "^18.0.2",
