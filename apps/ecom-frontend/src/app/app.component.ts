@@ -3,7 +3,7 @@ import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FaConfig, FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faFacebook, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons';
-import { faCartShopping, faTruckFast } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faTruckFast, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Oauth2Service } from './auth/oauth2.service';
 import { FooterComponent } from './layout/footer/footer.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
@@ -47,7 +47,8 @@ export class AppComponent implements OnInit {
       faTruckFast,
       faTwitter,
       faYoutube,
-      faFacebook
+      faFacebook,
+      faUser
     );
   }
 }

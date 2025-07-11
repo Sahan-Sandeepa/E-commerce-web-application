@@ -1,10 +1,10 @@
-import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { inject, Injectable } from '@angular/core';
 import { CreateQueryResult, injectQuery } from '@tanstack/angular-query-experimental';
-import { ConnectedUser } from '../shared/model/user.model';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { firstValueFrom, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { ConnectedUser } from '../shared/model/user.model';
 
 @Injectable({
   providedIn: 'root',

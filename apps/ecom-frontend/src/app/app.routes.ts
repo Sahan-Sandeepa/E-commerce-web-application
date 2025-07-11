@@ -3,12 +3,13 @@ import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.componen
 import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
 import { AdminCategoriesComponent } from './admin/category/admin-categories/admin-categories.component';
 import { CreateCategoryComponent } from './admin/category/create-category/create-category.component';
-import { HomeComponent } from './home/home.component';
-import { CartSuccessComponent } from './shop/cart-success/cart-success.component';
 import { CreateProductComponent } from './admin/product/create-product/create-product.component';
+import { CallbackComponent } from './auth/callback.component';
+import { LoginComponent } from './auth/loginComponent';
+import { roleCheckGuard } from './auth/role-check.guard';
+import { CartSuccessComponent } from './shop/cart-success/cart-success.component';
 import { CartComponent } from './shop/cart/cart.component';
 import { ProductDetailComponent } from './shop/product-detail/product-detail.component';
-import { roleCheckGuard } from './auth/role-check.guard';
 import { ProductsComponent } from './shop/products/products.component';
 import { UserOrdersComponent } from './user/user-orders/user-orders.component';
 
@@ -54,8 +55,8 @@ export const appRoutes: Route[] = [
     },
   },
   {
-    path: '',
-    component: HomeComponent,
+    path: 'callback',
+    component: CallbackComponent,
   },
   {
     path: 'product/:publicId',
@@ -64,6 +65,10 @@ export const appRoutes: Route[] = [
   {
     path: 'products',
     component: ProductsComponent,
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: 'cart',
