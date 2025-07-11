@@ -22,9 +22,11 @@ export const appConfig: ApplicationConfig = {
         postLogoutRedirectUri: environment.kinde.postLogoutRedirectUri,
         clientId: environment.kinde.clientId,
         scope: 'openid profile email',
+        silentRenew: false,
+        useRefreshToken: false,
         responseType: 'code',
-        silentRenew: true,
-        useRefreshToken: true,
+        // silentRenew: true,
+        // useRefreshToken: true,
         logLevel: LogLevel.Warn,
         secureRoutes: [environment.apiUrl],
         customParamsAuthRequest: {

@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
 
   constructor() {
     if (isPlatformBrowser(this.platformId)) {
-      this.oauth2Service.initAuthentication();
+      // this.oauth2Service.initAuthentication();
     }
     this.oauth2Service.connectedUserQuery = this.oauth2Service.fetch();
   }
