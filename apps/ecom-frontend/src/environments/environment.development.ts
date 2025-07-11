@@ -1,10 +1,10 @@
 export const environment = {
   kinde: {
-    authority: 'https://codecake.kinde.com',
-    redirectUrl: 'http://localhost:4200',
+    authority: 'https://ecomcodecake.kinde.com',
     postLogoutRedirectUri: 'http://localhost:4200',
-    clientId: 'f870e5ab3b524965b6c9b9c907c230c1',
-    audience: 'https://codecake.kinde.com/api',
+    clientId: 'b1848662d51c48af8788b63542d4a8ec',
+    redirectUrl: 'http://localhost:4200/callback',
+    audience: 'http://localhost:8080/api'
   },
   apiUrl: 'http://localhost:8080/api',
   stripePublishableKey:
