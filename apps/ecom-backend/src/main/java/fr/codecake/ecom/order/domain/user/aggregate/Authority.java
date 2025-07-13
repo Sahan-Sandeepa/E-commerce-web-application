@@ -23,5 +23,4 @@ public class Authority {
     Assert.notNull("name", name);
     this.name = name;
   }
-
 }
