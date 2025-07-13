@@ -10,8 +10,7 @@ import org.jilt.Builder;
 import java.util.UUID;
 
 @Builder
-public record RestCategory(UUID publicId,
-                           String name) {
+public record RestCategory(UUID publicId, String name) {
 
   public RestCategory {
     Assert.notNull("name", name);
@@ -20,12 +19,12 @@ public record RestCategory(UUID publicId,
   public static Category toDomain(RestCategory restCategory) {
     CategoryBuilder categoryBuilder = CategoryBuilder.category();
 
-    if(restCategory.name != null) {
-      categoryBuilder.name(new CategoryName(restCategory.name));
+    if (restCategory.publicId != null) {
+      categoryBuilder.publicId(new PublicId(restCategory.publicId));
     }
 
-    if(restCategory.publicId != null) {
-      categoryBuilder.publicId(new PublicId(restCategory.publicId));
+    if (restCategory.name != null) {
+      categoryBuilder.name(new CategoryName(restCategory.name));
     }
 
     return categoryBuilder.build();
