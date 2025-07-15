@@ -2,13 +2,32 @@ package fr.codecake.ecom.order.infrastructure.secondary.entity;
 
 import fr.codecake.ecom.order.domain.user.aggregate.User;
 import fr.codecake.ecom.order.domain.user.aggregate.UserBuilder;
-import fr.codecake.ecom.order.domain.user.vo.*;
+import fr.codecake.ecom.order.domain.user.vo.UserAddressBuilder;
+import fr.codecake.ecom.order.domain.user.vo.UserEmail;
+import fr.codecake.ecom.order.domain.user.vo.UserFirstname;
+import fr.codecake.ecom.order.domain.user.vo.UserImageUrl;
+import fr.codecake.ecom.order.domain.user.vo.UserLastname;
+import fr.codecake.ecom.order.domain.user.vo.UserPublicId;
 import fr.codecake.ecom.shared.jpa.AbstractAuditingEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import org.jilt.Builder;
 
 import java.time.Instant;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Entity
@@ -52,18 +71,18 @@ public class UserEntity extends AbstractAuditingEntity<Long> {
   @Column(name = "last_seen")
   private Instant lastSeen;
 
-  @ManyToMany(cascade = CascadeType.REMOVE)
-  @JoinTable(
-    name = "user_authority",
-    joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-    inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")}
-  )
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "user_authority", joinColumns = {
+      @JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
+          @JoinColumn(name = "authority_name", referencedColumnName = "name") })
   private Set<AuthorityEntity> authorities = new HashSet<>();
 
   public UserEntity() {
   }
 
-  public UserEntity(Long id, String lastName, String firstName, String email, String imageURL, UUID publicId, String addressStreet, String addressCity, String addressZipCode, String addressCountry, Instant lastSeen, Set<AuthorityEntity> authorities) {
+  public UserEntity(Long id, String lastName, String firstName, String email, String imageURL, UUID publicId,
+      String addressStreet, String addressCity, String addressZipCode, String addressCountry, Instant lastSeen,
+      Set<AuthorityEntity> authorities) {
     this.id = id;
     this.lastName = lastName;
     this.firstName = firstName;
@@ -105,42 +124,42 @@ public class UserEntity extends AbstractAuditingEntity<Long> {
     }
 
     return userEntityBuilder
-      .authorities(AuthorityEntity.from(user.getAuthorities()))
-      .email(user.getEmail().value())
-      .firstName(user.getFirstname().value())
-      .lastName(user.getLastname().value())
-      .lastSeen(user.getLastSeen())
-      .id(user.getDbId())
-      .build();
+        .authorities(AuthorityEntity.from(user.getAuthorities()))
+        .email(user.getEmail().value())
+        .firstName(user.getFirstname().value())
+        .lastName(user.getLastname().value())
+        .lastSeen(user.getLastSeen())
+        .id(user.getDbId())
+        .build();
   }
 
   public static User toDomain(UserEntity userEntity) {
     UserBuilder userBuilder = UserBuilder.user();
 
-    if(userEntity.getImageURL() != null) {
+    if (userEntity.getImageURL() != null) {
       userBuilder.imageUrl(new UserImageUrl(userEntity.getImageURL()));
     }
 
-    if(userEntity.getAddressStreet() != null) {
+    if (userEntity.getAddressStreet() != null) {
       userBuilder.userAddress(
-        UserAddressBuilder.userAddress()
-          .city(userEntity.getAddressCity())
-          .country(userEntity.getAddressCountry())
-          .zipCode(userEntity.getAddressZipCode())
-          .street(userEntity.getAddressStreet())
-          .build());
+          UserAddressBuilder.userAddress()
+              .city(userEntity.getAddressCity())
+              .country(userEntity.getAddressCountry())
+              .zipCode(userEntity.getAddressZipCode())
+              .street(userEntity.getAddressStreet())
+              .build());
     }
 
     return userBuilder
-      .email(new UserEmail(userEntity.getEmail()))
-      .lastname(new UserLastname(userEntity.getLastName()))
-      .firstname(new UserFirstname(userEntity.getFirstName()))
-      .authorities(AuthorityEntity.toDomain(userEntity.getAuthorities()))
-      .userPublicId(new UserPublicId(userEntity.getPublicId()))
-      .lastModifiedDate(userEntity.getLastModifiedDate())
-      .createdDate(userEntity.getCreatedDate())
-      .dbId(userEntity.getId())
-      .build();
+        .email(new UserEmail(userEntity.getEmail()))
+        .lastname(new UserLastname(userEntity.getLastName()))
+        .firstname(new UserFirstname(userEntity.getFirstName()))
+        .authorities(AuthorityEntity.toDomain(userEntity.getAuthorities()))
+        .userPublicId(new UserPublicId(userEntity.getPublicId()))
+        .lastModifiedDate(userEntity.getLastModifiedDate())
+        .createdDate(userEntity.getCreatedDate())
+        .dbId(userEntity.getId())
+        .build();
   }
 
   public static Set<UserEntity> from(List<User> users) {
@@ -249,8 +268,10 @@ public class UserEntity extends AbstractAuditingEntity<Long> {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof UserEntity that)) return false;
+    if (this == o)
+      return true;
+    if (!(o instanceof UserEntity that))
+      return false;
     return Objects.equals(publicId, that.publicId);
   }
 

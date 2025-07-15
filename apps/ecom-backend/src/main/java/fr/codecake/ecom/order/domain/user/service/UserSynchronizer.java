@@ -27,27 +27,54 @@ public class UserSynchronizer {
   public void syncWithIdp(Jwt jwtToken, boolean forceResync) {
     Map<String, Object> claims = jwtToken.getClaims();
     List<String> rolesFromToken = AuthenticatedUser.extractRolesFromToken(jwtToken);
+    System.out.println("Roles from Token: " + rolesFromToken);
     Map<String, Object> userInfo = kindeService.getUserInfo(claims.get("sub").toString());
     User user = User.fromTokenAttributes(userInfo, rolesFromToken);
-    Optional<User> existingUser = userRepository.getOneByEmail(user.getEmail());
-    if (existingUser.isPresent()) {
-      if (claims.get(UPDATE_AT_KEY) != null) {
-        Instant lastModifiedDate = existingUser.orElseThrow().getLastModifiedDate();
-        Instant idpModifiedDate = Instant.ofEpochSecond((Integer) claims.get(UPDATE_AT_KEY));
+    Optional<User> existingUserOpt = userRepository.getOneByEmail(user.getEmail());
 
-        if (idpModifiedDate.isAfter(lastModifiedDate) || forceResync) {
-          updateUser(user, existingUser.get());
+    if (existingUserOpt.isPresent()) {
+      User existingUser = existingUserOpt.get();
+
+      Object updatedAtObj = claims.get(UPDATE_AT_KEY);
+      System.out.println("UPDATE_AT_KEY present: " + updatedAtObj);
+
+      Instant idpModifiedDate = null;
+      if (updatedAtObj != null) {
+        // Defensive parsing - support Integer or Long
+        if (updatedAtObj instanceof Integer) {
+          idpModifiedDate = Instant.ofEpochSecond(((Integer) updatedAtObj).longValue());
+        } else if (updatedAtObj instanceof Long) {
+          idpModifiedDate = Instant.ofEpochSecond((Long) updatedAtObj);
+        } else {
+          System.err.println("Unexpected UPDATE_AT_KEY type: " + updatedAtObj.getClass());
         }
+      }
+
+      Instant lastModifiedDate = existingUser.getLastModifiedDate();
+
+      // Update if forced or idpModifiedDate is after lastModifiedDate
+      if (forceResync || idpModifiedDate == null || idpModifiedDate.isAfter(lastModifiedDate)) {
+        updateUser(user, existingUser);
+      } else {
+        System.out.println(
+            "No update needed. IDP modified date: " + idpModifiedDate + ", last modified: " + lastModifiedDate);
       }
     } else {
       user.initFieldForSignup();
       userRepository.save(user);
     }
-
   }
 
-  private void updateUser(User user, User existingUser) {
-    existingUser.updateFromUser(user);
+  private void updateUser(User userFromToken, User existingUser) {
+    existingUser.updateFromUser(userFromToken);
+
+    existingUser.getAuthorities().clear();
+    existingUser.getAuthorities().addAll(userFromToken.getAuthorities());
+
+    if (existingUser.getLastSeen() == null) {
+      existingUser.setLastSeen(Instant.now());
+    }
+
     userRepository.save(existingUser);
   }
 
