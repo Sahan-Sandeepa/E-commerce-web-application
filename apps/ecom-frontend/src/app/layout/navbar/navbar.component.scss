@@ -1,3 +1,16 @@
+/* Optional Enhancements */
+.navbar a {
+  @apply transition duration-300;
+}
+
+.navbar a:hover {
+  @apply text-primary;
+}
+
+.navbar .dropdown ul {
+  @apply rounded shadow-md bg-base-100;
+}
+
 .menu-icon {
-  font-size: 1.8rem;
+  @apply w-6 h-6 text-gray-600 hover:text-primary;
 }

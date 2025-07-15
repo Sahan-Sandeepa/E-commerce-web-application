@@ -1,36 +1,42 @@
-<footer class="footer bg-secondary border-2 border-t text-base-content p-10">
-  <nav>
-    <h6 class="footer-title">Help</h6>
-    <a href="#" class="link link-hover">Shipping</a>
-    <a href="#" class="link link-hover">Returns + Exchanges</a>
-    <a href="#" class="link link-hover">FAQ</a>
-    <a href="#" class="link link-hover">Compare</a>
-  </nav>
-  <nav>
-    <h6 class="footer-title">Company</h6>
-    <a href="#" class="link link-hover">About us</a>
-    <a href="#" class="link link-hover">Contact</a>
-    <a href="#" class="link link-hover">Jobs</a>
-    <a href="#" class="link link-hover">Press kit</a>
-  </nav>
-  <nav>
-    <h6 class="footer-title">Legal</h6>
-    <a href="#" class="link link-hover">Terms of use</a>
-    <a href="#" class="link link-hover">Privacy policy</a>
-    <a href="#" class="link link-hover">Cookie policy</a>
-  </nav>
-</footer>
-<footer class="footer bg-secondary text-base-content px-10 py-4">
-  <aside class="grid-flow-col items-center">
-    <fa-icon class="pe-3" [icon]="['fas', 'truck-fast']" size="3x"></fa-icon>
-    <p>
-      CodeCake Ltd.
-      <br/>
-      Providing Ecommerce solutions
-    </p>
-  </aside>
-  <nav class="md:place-self-center md:justify-self-end">
-    <div class="grid grid-flow-col gap-4">
+<footer class="border-t border-t-base-300 pt-10 pb-6 mb-4 max-w-7xl mx-auto">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 px-6 md:px-0">
+    <nav>
+      <h6 class="footer-title">Help</h6>
+      <ul class="space-y-1 text-sm">
+        <li><a routerLink="/shipping" class="link-hover">Shipping</a></li>
+        <li><a routerLink="/returns" class="link-hover">Returns + Exchanges</a></li>
+        <li><a routerLink="/faq" class="link-hover">FAQ</a></li>
+        <li><a routerLink="/compare" class="link-hover">Compare</a></li>
+      </ul>
+    </nav>
+    <nav>
+      <h6 class="footer-title">Company</h6>
+      <ul class="space-y-1 text-sm">
+        <li><a routerLink="/about" class="link-hover">About us</a></li>
+        <li><a routerLink="/contact" class="link-hover">Contact</a></li>
+        <li><a routerLink="/careers" class="link-hover">Jobs</a></li>
+        <li><a routerLink="/press" class="link-hover">Press kit</a></li>
+      </ul>
+    </nav>
+    <nav>
+      <h6 class="footer-title">Legal</h6>
+      <ul class="space-y-1 text-sm">
+        <li><a routerLink="/terms" class="link-hover">Terms of use</a></li>
+        <li><a routerLink="/privacy" class="link-hover">Privacy policy</a></li>
+        <li><a routerLink="/cookies" class="link-hover">Cookie policy</a></li>
+      </ul>
+    </nav>
+    <aside class="flex flex-col gap-2">
+      <fa-icon class="pe-3 text-primary" [icon]="['fas', 'truck-fast']" size="3x"></fa-icon>
+      <p class="text-sm">
+        CodeCake Ltd.<br />
+        Providing modern eCommerce solutions
+      </p>
+    </aside>
+  </div>
+
+  <div class="flex flex-col md:flex-row justify-between items-center gap-4 mt-10 px-6 md:px-0">
+    <div class="flex gap-4">
       <a href="#" aria-label="Twitter shop">
         <fa-icon [icon]="['fab', 'twitter']" size="2x"></fa-icon>
       </a>
@@ -41,5 +47,8 @@
         <fa-icon [icon]="['fab', 'facebook']" size="2x"></fa-icon>
       </a>
     </div>
-  </nav>
+    <div class="text-center md:text-right text-sm">
+      <p>&copy;{{currentDate}} CodeCake E-Commerce. All rights reserved.</p>
+    </div>
+  </div>
 </footer>

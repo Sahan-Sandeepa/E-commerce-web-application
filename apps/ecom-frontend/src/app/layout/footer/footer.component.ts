@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
@@ -9,4 +9,6 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
 })
-export class FooterComponent {}
+export class FooterComponent {
+  currentDate = new Date().getFullYear();
+}
