@@ -1,28 +1,62 @@
-<div class="hero min-h-screen rounded-xl"
-style="background-image: url(./home/hero.webp); background-size: cover">
-  <div class="hero-overlay bg-opacity-20"></div>
-  <div class="hero-content justify-start text-neutral-content
-  w-full px-6 sm:px-8 lg:px-10">
-    <div class="text-left">
-      <h1 class="mb-5 text-3xl sm:text-5xl text-white font-bold">
-        Ecommerce app
+<!-- ===== Hero Section ===== -->
+<section
+  class="hero min-h-[70vh] rounded-xl relative overflow-hidden"
+  style="background-image: url(./home/hero.webp); background-size: cover; background-position: center"
+>
+  <div class="absolute inset-0 bg-black/40"></div>
+  <div
+    class="relative z-10 hero-content justify-start text-white w-full px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto"
+  >
+    <div class="max-w-lg">
+      <h1 class="mb-4 text-4xl sm:text-6xl font-extrabold leading-tight">
+        Your Modern Ecommerce
       </h1>
-      <p class="mb-5 text-lg sm:text-2xl text-white">
-        Check out our collection of products
+      <p class="mb-6 text-lg sm:text-2xl">
+        Discover the latest collections with exclusive offers.
       </p>
-      <button class="btn btn-primary btn-lg" routerLink="/products">
-        Shop collection
+      <button
+        class="btn bg-primary text-white px-8 py-3 rounded-lg hover:bg-primary/90 transition"
+        routerLink="/products"
+      >
+        Shop Now
       </button>
     </div>
   </div>
-</div>
-<div class="w-full my-10 md:my-20">
-  <h2 class="text-2xl sm:text-3xl font-bold text-center my-8 sm:my-12">
-    Featured products
+</section>
+
+<!-- ===== Featured Products Section ===== -->
+<section class="w-full py-14 sm:py-20 bg-base-100">
+  <h2
+    class="text-3xl sm:text-4xl font-extrabold text-center text-gray-800 mb-10"
+  >
+    Featured Products
   </h2>
   @defer (on immediate) {
     <ecom-featured></ecom-featured>
   } @placeholder {
-    <div>Loading... </div>
+    <div class="text-center text-gray-500">Loading...</div>
   }
-</div>
+</section>
+
+<!-- ===== Product Grid Section ===== -->
+<section class="w-full mt-10 pb-16 px-6">
+  @if (isLoading()) {
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 mx-auto max-w-7xl gap-6"
+  >
+    @for (item of [1, 2, 3, 4]; track item) {
+    <app-product-card-skeleton />
+    }
+  </div>
+  } @else {
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 mx-auto max-w-7xl gap-6"
+  >
+    @for (product of productsResource.value(); track product.id) {
+    <app-product-card [product]="product" />
+    }
+  </div>
+  }
+</section>
+
+<app-footer />

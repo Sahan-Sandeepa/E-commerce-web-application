@@ -1,18 +1,18 @@
-import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { Oauth2Service } from '../../auth/oauth2.service';
-import { ClickOutside } from 'ngxtension/click-outside';
-import { UserProductService } from '../../shared/service/user-product.service';
+import { Component, inject, OnInit } from '@angular/core';
+import { RouterLink, RouterModule } from '@angular/router';
+import { FaIconComponent, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { injectQuery } from '@tanstack/angular-query-experimental';
+import { ClickOutside } from 'ngxtension/click-outside';
 import { lastValueFrom } from 'rxjs';
+import { Oauth2Service } from '../../auth/oauth2.service';
+import { UserProductService } from '../../shared/service/user-product.service';
 import { CartService } from '../../shop/cart.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, FaIconComponent, ClickOutside],
+  imports: [CommonModule, RouterLink, FaIconComponent, ClickOutside, FontAwesomeModule, RouterModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
@@ -45,6 +45,11 @@ export class NavbarComponent implements OnInit {
       this.connectedUserQuery?.status() === 'success' &&
       this.connectedUserQuery?.data()?.email !== this.oauth2Service.notConnected
     );
+  }
+
+  cartItemQuantity(): number {
+    this.listenToCart();
+    return this.nbItemsInCart;
   }
 
   closeDropDownMenu() {

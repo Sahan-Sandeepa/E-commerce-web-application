@@ -1,85 +1,89 @@
-<div class="navbar bg-base-100">
-  <div class="navbar-start">
-    <div class="dropdown">
-      <a class="btn btn-ghost text-xl">
-        <div class="border-1 bg-secondary logo p-2 rounded-xl" routerLink="/">EC</div>
+<header class="w-full fixed top-0 z-50 border-b bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-90 border-base-300">
+  <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-16">
+
+    <!-- Left Side (Logo) -->
+    <div class="flex items-center gap-x-4">
+      <a class="flex items-center gap-x-2 text-xl font-semibold transition hover:text-primary" routerLink="/">
+        <div class="border p-2 rounded-xl bg-secondary text-white">EC</div>
+        <span class="hidden lg:block">NG-Commerce</span>
       </a>
-    </div>
-  </div>
-  <div class="navbar-center flex">
-    <div class="menu menu-sm sm:menu-lg menu-horizontal px-1">
-      <li><a href="/">Home</a></li>
-      <li>
-        <details #productsMenu>
-          <summary>Products</summary>
-          <ul class="z-30">
+
+      <!-- Navigation Links Desktop -->
+      <nav class="hidden lg:flex items-center gap-x-6 text-sm font-medium">
+        <a routerLink="/" routerLinkActive="text-primary underline" [routerLinkActiveOptions]="{ exact: true }" class="hover:underline">All</a>
+        <a routerLink="/men-clothing" routerLinkActive="text-primary underline" class="hover:underline">Men</a>
+        <a routerLink="/women-clothing" routerLinkActive="text-primary underline" class="hover:underline">Women</a>
+        <a routerLink="/jewelry" routerLinkActive="text-primary underline" class="hover:underline">Jewelry</a>
+        <a routerLink="/electronics" routerLinkActive="text-primary underline" class="hover:underline">Electronics</a>
+
+        <!-- Products Dropdown -->
+        <div class="relative group">
+          <button class="hover:underline">Products</button>
+          <ul class="absolute hidden group-hover:block bg-base-100 rounded shadow-lg p-2 mt-2 z-20">
             <li *ngFor="let category of categoryQuery.data()?.content">
-              <a [routerLink]="['products']" [queryParams]="{category: category.publicId}" (click)="closeMenu(productsMenu)" (clickOutside)="closeMenu(productsMenu)">
-                {{ category.name }}
-              </a>
+              <a [routerLink]="['products']" [queryParams]="{category: category.publicId}" class="block px-4 py-1 hover:text-primary">{{ category.name }}</a>
             </li>
           </ul>
-        </details>
-      </li>
-      <div *ngIf="connectedUserQuery?.status() === 'success' && oauth2Service.hasAnyAuthorities(connectedUserQuery?.data()!, 'ROLE_ADMIN')">
-        <li>
-          <details #adminMenu>
-            <summary>Admin</summary>
-            <ul class="z-30">
-              <li>
-                <a routerLink="admin/categories/list"
-                   (click)="closeMenu(adminMenu)" (clickOutside)="closeMenu(adminMenu)">Categories</a>
-              </li>
-              <li>
-                <a routerLink="admin/products/list"
-                   (click)="closeMenu(adminMenu)" (clickOutside)="closeMenu(adminMenu)">Products</a>
-              </li>
-              <li>
-                <a routerLink="admin/orders/list"
-                   (click)="closeMenu(adminMenu)" (clickOutside)="closeMenu(adminMenu)">Orders</a>
-              </li>
+        </div>
+
+        <!-- Admin Dropdown -->
+        <ng-container *ngIf="connectedUserQuery?.status() === 'success' && oauth2Service.hasAnyAuthorities(connectedUserQuery?.data()!, 'ROLE_ADMIN')">
+          <div class="relative group">
+            <button class="hover:underline">Admin</button>
+            <ul class="absolute hidden group-hover:block bg-base-100 rounded shadow-lg p-2 mt-2 z-20">
+              <li><a routerLink="/admin/categories/list" class="block px-4 py-1 hover:text-primary">Categories</a></li>
+              <li><a routerLink="/admin/products/list" class="block px-4 py-1 hover:text-primary">Products</a></li>
+              <li><a routerLink="/admin/orders/list" class="block px-4 py-1 hover:text-primary">Orders</a></li>
             </ul>
-          </details>
-        </li>
-      </div>
-    </div>
-  </div>
-  <div class="navbar-end pe-4 flex align-items-center">
-    <div class="dropdown dropdown-end pe-4">
-      <div tabindex="0" role="button">
-        @if (this.isConnected() && connectedUserQuery?.data()?.imageUrl !== null) {
-          <div class="border border-solid rounded-full">
-            <img src="{{connectedUserQuery?.data()?.imageUrl}}" alt="user-avatar"
-                 class="avatar-unknown rounded-full" width="45px" />
           </div>
-        } @else {
-          <fa-icon [icon]="['fas', 'user']" class="menu-icon"></fa-icon>
-        }
-      </div>
-      @if (this.isConnected()) {
-        <ul class="dropdown-content menu menu-lg bg-base-100 rounded-box z-10 w-52 p-2 shadow">
-          <li>
-            <button class="link" (click)="closeDropDownMenu()" routerLink="/users/orders">My Orders</button>
-          </li>
-          <li>
-            <button class="link" (click)="logout()">Logout</button>
-          </li>
-        </ul>
-      } @else {
-        <ul class="dropdown-content menu menu-lg bg-base-100 rounded-box z-10 w-52 p-2 shadow">
-          <li>
-            <button class="link" (click)="login()">Login</button>
-          </li>
-        </ul>
-      }
+        </ng-container>
+      </nav>
     </div>
-    <div class="dropdown dropdown-end me-2" routerLink="/cart">
-      <div tabindex="0" role="button">
-        <div class="indicator">
-          <span class="indicator-item badge badge-primary">{{ nbItemsInCart }}</span>
-          <fa-icon [icon]="['fas', 'cart-shopping']" class="menu-icon"></fa-icon>
+
+    <!-- Right Side -->
+    <div class="flex items-center gap-x-4">
+      <!-- User Dropdown -->
+      <div class="relative group">
+        <div class="cursor-pointer">
+          <ng-container *ngIf="this.isConnected() && connectedUserQuery?.data()?.imageUrl !== null; else guest">
+            <img [src]="connectedUserQuery?.data()?.imageUrl" alt="user-avatar" class="w-10 h-10 rounded-full border" />
+          </ng-container>
+          <ng-template #guest>
+            <fa-icon [icon]="['fas', 'user']" class="w-6 h-6 text-gray-600"></fa-icon>
+          </ng-template>
+        </div>
+        <ul *ngIf="this.isConnected()" class="absolute right-0 hidden group-hover:block bg-base-100 rounded shadow-lg p-2 mt-2 w-48 z-20">
+          <li><a routerLink="/users/orders" class="block px-4 py-1 hover:text-primary">My Orders</a></li>
+          <li><button (click)="logout()" class="block w-full text-left px-4 py-1 hover:text-primary">Logout</button></li>
+        </ul>
+        <ul *ngIf="!this.isConnected()" class="absolute right-0 hidden group-hover:block bg-base-100 rounded shadow-lg p-2 mt-2 w-48 z-20">
+          <li><button (click)="login()" class="block w-full text-left px-4 py-1 hover:text-primary">Login</button></li>
+        </ul>
+      </div>
+
+      <!-- Cart Icon -->
+      <div class="relative">
+        <a routerLink="/shopping-cart" class="relative">
+          <fa-icon [icon]="['fas', 'cart-shopping']" class="w-6 h-6 text-gray-600"></fa-icon>
+          <span *ngIf="cartItemQuantity() >= 1" class="absolute -top-2 -right-2 badge badge-primary text-xs">
+            {{ cartItemQuantity() }}
+          </span>
+        </a>
+      </div>
+
+      <!-- Theme Switcher -->
+      <select data-choose-theme class="select select-bordered select-sm">
+        <option value="dark">Default</option>
+        <option value="dark">Dark</option>
+        <option value="light">Light</option>
+      </select>
+
+      <!-- Mobile Hamburger -->
+      <div class="lg:hidden">
+        <div tabindex="0" role="button" class="btn btn-sm">
+          <fa-icon [icon]="['fas', 'bars']"></fa-icon>
         </div>
       </div>
     </div>
   </div>
-</div>
+</header>

@@ -4,43 +4,21 @@ const { join } = require('path');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    join(__dirname, 'src/**/!(*.stories|*.spec).{ts,html}'),
+    join(__dirname, 'src/**/!(*.stories|*.spec).{ts,html,scss}'),
     ...createGlobPatternsForDependencies(__dirname),
   ],
   theme: {
-    fontFamily: {
-      'sans': 'Inter var, ui-sans-serif, system-ui',
-      'serif': 'Inter var, ui-sans-serif, system-ui'
+    extend: {
+      colors: {
+        primary: '#2563eb', // or your desired color (blue-600)
+        secondary: '#6b7280', // optional, if you use it
+        base: {
+          100: '#f5f5f5',
+          200: '#e5e7eb',
+          300: '#d1d5db',
+        },
+      },
     },
-    fontSize: {
-      sm: '0.875rem',
-      base: '1.3rem',
-      xl: '1.5rem',
-      '2xl': '1.563rem',
-      '3xl': '1.953rem',
-      '4xl': '2.441rem',
-      '5xl': '3.052rem',
-    },
-    extend: {},
   },
-  daisyui: {
-    themes: [{
-      fantacy: {
-        primary: '#0000ff',
-        'primary-content': 'white',
-        secondary: '#F6F6F6',
-        nautral: '#E8E8E8',
-      }
-    }],
-    base: true,
-    styled: true,
-    utils: true,
-    prefix: '',
-    logs: true,
-    themeRoot: 'root',
-  },
-  plugins: [
-    require('@tailwindcss/typography'),
-    require('daisyui'),
-  ],
+  plugins: [],
 };
