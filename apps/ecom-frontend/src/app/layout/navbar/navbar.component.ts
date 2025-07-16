@@ -1,18 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 import { FaIconComponent, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 import { ClickOutside } from 'ngxtension/click-outside';
 import { lastValueFrom } from 'rxjs';
 import { Oauth2Service } from '../../auth/oauth2.service';
+import { DropdownComponent } from '../../shared/assets/dropdown.component';
 import { UserProductService } from '../../shared/service/user-product.service';
 import { CartService } from '../../shop/cart.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, FaIconComponent, ClickOutside, FontAwesomeModule, RouterModule],
+  imports: [CommonModule, RouterLink, FaIconComponent, ClickOutside, FontAwesomeModule, RouterModule, DropdownComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
@@ -20,7 +21,10 @@ export class NavbarComponent implements OnInit {
   oauth2Service = inject(Oauth2Service);
   productService = inject(UserProductService);
   cartService = inject(CartService);
-
+  isHoveringProducts = false;
+  isProductsDropdownClicked = false;
+  isHoveringUser = false;
+  isUserDropdownClicked = false;
   nbItemsInCart = 0;
 
   connectedUserQuery = this.oauth2Service.connectedUserQuery;
@@ -75,4 +79,53 @@ export class NavbarComponent implements OnInit {
       );
     });
   }
+
+  onCategoryClick() {
+    this.isProductsDropdownClicked = false;
+    this.isHoveringProducts = false;
+  }
+
+  get isAdmin(): boolean {
+    return this.connectedUserQuery?.status() === 'success' &&
+      this.oauth2Service.hasAnyAuthorities(this.connectedUserQuery?.data()!, 'ROLE_ADMIN');
+  }
+
+  toggleTheme(event: Event) {
+    const target = event.target as HTMLSelectElement;
+    const mode = target.value as 'dark' | 'light';
+    document.documentElement.setAttribute('data-theme', mode);
+  }
+
+  onMouseEnterUser() {
+    if (!this.isUserDropdownClicked) {
+      this.isHoveringUser = true;
+    }
+  }
+
+  onMouseLeaveUser() {
+    if (!this.isUserDropdownClicked) {
+      this.isHoveringUser = false;
+    }
+  }
+
+  toggleUserDropdown(event: MouseEvent) {
+    event.stopPropagation();
+    this.isUserDropdownClicked = !this.isUserDropdownClicked;
+    this.isHoveringUser = this.isUserDropdownClicked;
+  }
+
+  onUserDropdownItemClick() {
+    this.isUserDropdownClicked = false;
+    this.isHoveringUser = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.relative')) {
+      this.isUserDropdownClicked = false;
+      this.isHoveringUser = false;
+    }
+  }
+
 }
