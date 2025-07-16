@@ -1,15 +1,16 @@
 <header
-  class="w-full fixed top-0 z-50 border-b bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-90 border-base-300">
+  class="w-full fixed top-0 z-50 border-b bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-90 border-base-300 dark:border-gray-700 dark:bg-gray-900">
   <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-16">
 
     <!-- Left Side (Logo) -->
     <div class="flex items-center gap-x-4">
-      <a class="flex items-center gap-x-2 text-xl font-semibold transition hover:text-primary" routerLink="/">
+      <a class="flex items-center gap-x-2 text-xl font-semibold transition hover:text-primary dark:text-white"
+        routerLink="/">
         <div class="border p-2 rounded-xl bg-secondary text-white">SparkleShelf</div>
       </a>
 
       <!-- Navigation Links Desktop -->
-      <nav class="hidden lg:flex items-center gap-x-6 text-sm font-medium">
+      <nav class="hidden lg:flex items-center gap-x-6 text-sm font-medium dark:text-gray-200">
         <app-dropdown label="All">
           <li><a class="block px-4 py-1 hover:text-primary">All Item 1</a></li>
           <li><a class="block px-4 py-1 hover:text-primary">All Item 2</a></li>
@@ -35,7 +36,6 @@
           <li><a class="block px-4 py-1 hover:text-primary">Electronics Item 2</a></li>
         </app-dropdown>
 
-        <!-- Products Dropdown -->
         <app-dropdown label="Products">
           <li *ngFor="let category of categoryQuery.data()?.content">
             <a [routerLink]="['products']" [queryParams]="{ category: category.publicId }" (click)="onCategoryClick()"
@@ -45,7 +45,6 @@
           </li>
         </app-dropdown>
 
-        <!-- Admin Dropdown -->
         <app-dropdown *ngIf="isAdmin" label="Admin">
           <li><a routerLink="/admin/categories/list" class="block px-4 py-1 hover:text-primary">Categories</a></li>
           <li><a routerLink="/admin/products/list" class="block px-4 py-1 hover:text-primary">Products</a></li>
@@ -64,23 +63,27 @@
             <img [src]="connectedUserQuery?.data()?.imageUrl" alt="user-avatar" class="w-10 h-10 rounded-full border" />
           </ng-container>
           <ng-template #guest>
-            <fa-icon [icon]="['fas', 'user']" class="w-6 h-6 text-gray-600"></fa-icon>
+            <fa-icon [icon]="['fas', 'user']" class="w-6 h-6 text-gray-600 dark:text-gray-400"></fa-icon>
           </ng-template>
         </div>
 
         <ul *ngIf="isUserDropdownClicked || isHoveringUser"
-          class="absolute top-full mt-2 right-0 bg-base-100 rounded shadow-lg p-2 w-48 z-20 transition-all">
+          class="absolute top-full mt-2 right-0 bg-white dark:bg-gray-800 text-black dark:text-white rounded shadow-lg p-2 w-48 z-20 transition-all">
           <li *ngIf="isConnected()">
             <a routerLink="/users/orders" (click)="onUserDropdownItemClick()"
               class="block px-4 py-1 hover:text-primary">My Orders</a>
           </li>
           <li *ngIf="isConnected()">
             <button (click)="logout(); onUserDropdownItemClick()"
-              class="block w-full text-left px-4 py-1 hover:text-primary">Logout</button>
+              class="block w-full text-left px-4 py-1 hover:text-primary">
+              Logout
+            </button>
           </li>
           <li *ngIf="!isConnected()">
             <button (click)="login(); onUserDropdownItemClick()"
-              class="block w-full text-left px-4 py-1 hover:text-primary">Login</button>
+              class="block w-full text-left px-4 py-1 hover:text-primary">
+              Login
+            </button>
           </li>
         </ul>
       </div>
@@ -88,7 +91,7 @@
       <!-- Cart Icon -->
       <div class="relative">
         <a routerLink="/shopping-cart" class="relative">
-          <fa-icon [icon]="['fas', 'cart-shopping']" class="w-6 h-6 text-gray-600"></fa-icon>
+          <fa-icon [icon]="['fas', 'cart-shopping']" class="w-6 h-6 text-gray-600 dark:text-gray-400"></fa-icon>
           <span *ngIf="cartItemQuantity() >= 1" class="absolute -top-2 -right-2 badge badge-primary text-xs">
             {{ cartItemQuantity() }}
           </span>
@@ -96,16 +99,19 @@
       </div>
 
       <!-- Theme Switcher -->
-      <select class="select select-bordered select-sm" (change)="toggleTheme($event)">
-        <option value="dark">Default</option>
-        <option value="dark">Dark</option>
-        <option value="light">Light</option>
-      </select>
+      <button 
+        (click)="toggleTheme(currentTheme === 'dark' ? 'light' : 'dark')"
+        class="p-2 rounded-full border dark:border-gray-600 border-gray-300 dark:bg-gray-700 bg-white transition hover:bg-gray-200 dark:hover:bg-gray-600"
+        title="Toggle light/dark mode"
+      >
+        <fa-icon *ngIf="currentTheme === 'dark'" [icon]="['fas', 'sun']" class="text-yellow-400"></fa-icon>
+        <fa-icon *ngIf="currentTheme === 'light'" [icon]="['fas', 'moon']" class="text-gray-800"></fa-icon>
+      </button>
 
       <!-- Mobile Hamburger -->
       <div class="lg:hidden">
         <div tabindex="0" role="button" class="btn btn-sm">
-          <fa-icon [icon]="['fas', 'bars']"></fa-icon>
+          <fa-icon [icon]="['fas', 'bars']" class="dark:text-gray-400"></fa-icon>
         </div>
       </div>
     </div>
