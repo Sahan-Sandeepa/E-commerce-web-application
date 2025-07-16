@@ -14,7 +14,7 @@ import { Component, HostListener, Input } from '@angular/core';
         {{ label }}
       </button>
       <ul *ngIf="isHovering || isClicked"
-          class="absolute bg-base-100 rounded shadow-lg p-2 mt-2 z-20 w-48 transition-opacity duration-200 opacity-100">
+          class="absolute bg-base-100 dark:bg-gray-800 dark:text-white rounded shadow-lg p-2 mt-2 w-48">
         <ng-content></ng-content>
       </ul>
     </div>
