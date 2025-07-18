@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FaConfig, FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faFacebook, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { faCircleCheck as farCircleCheck } from '@fortawesome/free-regular-svg-icons';
-import { faBars, faCartShopping, faTruckFast, faUser, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCartShopping, faMoon, faSun, faTruckFast, faUser, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Oauth2Service } from './auth/oauth2.service';
 import { FooterComponent } from './layout/footer/footer.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
@@ -52,7 +52,9 @@ export class AppComponent implements OnInit {
       faUser,
       faXmark,
       farCircleCheck,
-      faBars
+      faBars,
+      faMoon,
+      faSun
     );
   }
 }
