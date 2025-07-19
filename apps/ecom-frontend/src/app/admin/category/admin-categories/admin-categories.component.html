@@ -1,51 +1,69 @@
-<div class="w-full flex justify-between items-center">
-  <div>
-    <h1 class="text-2xl font-bold">Categories</h1>
-    <div>Add and delete categories</div>
+<div class="px-6 space-y-6">
+
+  <!-- Header Section -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div>
+      <h1 class="text-3xl font-semibold text-gray-800 dark:text-gray-100">Manage Categories</h1>
+      <p class="text-gray-500 dark:text-gray-400 mt-1">Create and maintain your product categories.</p>
+    </div>
+
+    <button class="bg-primary text-white font-medium px-5 py-2 rounded-lg shadow hover:bg-primary/90 transition"
+      routerLink="/admin/categories/create">
+      + Create Category
+    </button>
   </div>
-  <button class="btn btn-primary" routerLink="/admin/categories/create">
-    Create categories
-  </button>
-</div>
-<div class="border-t w-full border-solid border-gray-300 mt-3 mb-5"></div>
-@if (categoriesQuery.isSuccess() && categoriesQuery.data()!.content.length !== 0) {
-  <div class="overflow-x-auto border border-gray-300 rounded-md">
-    <table class="table table-lg table-zebra">
-      <thead class="border-gray-300">
-      <tr class="border-gray-300">
-        <th></th>
-        <th>Public Id</th>
-        <th>Name</th>
-        <th>Actions</th>
-      </tr>
+
+  <hr class="border-gray-300 dark:border-gray-700">
+
+  <!-- Table Section -->
+  @if (categoriesQuery.isSuccess() && categoriesQuery.data()!.content.length !== 0) {
+  <div class="overflow-x-auto border rounded-lg shadow-sm bg-white dark:bg-gray-900">
+    <table class="min-w-full text-sm text-gray-700 dark:text-gray-200">
+      <thead class="bg-gray-100 dark:bg-gray-800 uppercase tracking-wide text-xs text-gray-500 dark:text-gray-400">
+        <tr>
+          <th class="p-3 text-left">#</th>
+          <th class="p-3 text-left">Public ID</th>
+          <th class="p-3 text-left">Name</th>
+          <th class="p-3 text-left">Actions</th>
+        </tr>
       </thead>
-      <tbody class="border-0">
-      @for (category of categoriesQuery.data()!.content; track category.publicId; let i = $index) {
-        <tr class="border-gray-300">
-          <th>{{ i }}</th>
-          <td>{{category.publicId}}</td>
-          <td>{{category.name}}</td>
-          <td>
-            <div (click)="deleteCategory(category.publicId!)" class="btn btn-secondary btn-sm">
+      <tbody>
+        @for (category of categoriesQuery.data()!.content; track category.publicId; let i = $index) {
+        <tr class="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
+          <td class="p-3">{{ i }}</td>
+          <td class="p-3 font-mono text-xs text-gray-500 dark:text-gray-400">{{ category.publicId }}</td>
+          <td class="p-3">{{ category.name }}</td>
+          <td class="p-3">
+            <button (click)="deleteCategory(category.publicId!)" class="text-red-500 hover:text-red-700 font-medium">
               Delete
-            </div>
+            </button>
           </td>
         </tr>
-      }
+        }
       </tbody>
     </table>
   </div>
-} @else if (categoriesQuery.isPending()) {
-  <div class="flex w-full justify-center">
+  }
+
+  <!-- Loading Spinner -->
+  @else if (categoriesQuery.isPending()) {
+  <div class="flex justify-center py-10">
     <span class="loading loading-spinner loading-lg"></span>
   </div>
-} @else if (categoriesQuery.isError()) {
-  <div class="alert alert-error">
+  }
+
+  <!-- Error Message -->
+  @else if (categoriesQuery.isError()) {
+  <div class="flex items-center justify-center bg-red-100 text-red-700 rounded-md p-4">
     <span>Error! Failed to load categories.</span>
   </div>
-} @else if(categoriesQuery.data()!.content.length === 0) {
-  <div role="alert" class="alert alert-info">
+  }
+
+  <!-- Empty Message -->
+  @else if(categoriesQuery.data()!.content.length === 0) {
+  <div role="alert" class="flex items-center gap-3 bg-blue-100 text-blue-700 rounded-md p-4">
     <fa-icon [icon]="['fas', 'circle-exclamation']" size="2x"></fa-icon>
-    <span>No category created yet.</span>
+    <span>No categories created yet.</span>
   </div>
-}
+  }
+</div>
