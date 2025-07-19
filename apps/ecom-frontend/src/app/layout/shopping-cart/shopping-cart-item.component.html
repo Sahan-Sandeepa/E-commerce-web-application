@@ -1,0 +1,29 @@
+<div class="flex items-start justify-start gap-x-4 cart-item">
+  <figure>
+    <img
+      class="h-[130px] w-[140px] object-fill"
+      [src]="item().image"
+      [alt]="item().title"
+    />
+  </figure>
+  <div class="w-full">
+    <div class="space-y-1">
+      <p class="font-bold">{{ item().title }}</p>
+      <p class="font-bold text-lg mt-auto">$ {{ item().price }}</p>
+    </div>
+    <div class="mt-3 flex items-center justify-between gap-x-4">
+      <div class="flex items-center gap-x-2">
+        <button (click)="decrementItemQuantity()" class="btn btn-soft btn-sm">
+          <fa-icon [icon]="faMinus"></fa-icon>
+        </button>
+        <span>{{ item().quantity }}</span>
+        <button (click)="incrementItemQuantity()" class="btn btn-soft btn-sm">
+          <fa-icon [icon]="faPlus"></fa-icon>
+        </button>
+      </div>
+      <button (click)="removeItemQuantity()" class="btn btn-soft btn-error btn-sm">
+        <fa-icon [icon]="faTrashCan"></fa-icon>
+      </button>
+    </div>
+  </div>
+</div>

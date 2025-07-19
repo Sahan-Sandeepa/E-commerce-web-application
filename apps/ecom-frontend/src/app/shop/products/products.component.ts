@@ -34,8 +34,8 @@ export class ProductsComponent {
 
   filterProducts: ProductFilter = {
     category: this.category(),
-    size: this.size() ? this.size()! : '',
-    sort: [this.sort() ? this.sort()! : ''],
+    size: this.size() || '',
+    sort: [this.sort() || ''],
   };
 
   lastCategory = '';
@@ -76,11 +76,11 @@ export class ProductsComponent {
 
   private handleParametersChange() {
     if (this.category()) {
-      if (this.lastCategory != this.category() && this.lastCategory !== '') {
+      if (this.lastCategory !== this.category() && this.lastCategory !== '') {
         this.filterProducts = {
           category: this.category(),
-          size: this.size() ? this.size()! : '',
-          sort: [this.sort() ? this.sort()! : ''],
+          size: this.size() || '',
+          sort: [this.sort() || ''],
         };
         this.filteredProductsQuery.refetch();
       }

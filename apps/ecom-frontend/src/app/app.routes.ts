@@ -12,8 +12,14 @@ import { CartComponent } from './shop/cart/cart.component';
 import { ProductDetailComponent } from './shop/product-detail/product-detail.component';
 import { ProductsComponent } from './shop/products/products.component';
 import { UserOrdersComponent } from './user/user-orders/user-orders.component';
+import { HomeComponent } from './home/home.component';
 
 export const appRoutes: Route[] = [
+  {
+    path: '',
+    pathMatch: 'full',
+    component: HomeComponent,
+  },
   {
     path: 'admin/categories/list',
     component: AdminCategoriesComponent,

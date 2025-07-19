@@ -1,0 +1,13 @@
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #000;
+  background-blend-mode: overlay;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

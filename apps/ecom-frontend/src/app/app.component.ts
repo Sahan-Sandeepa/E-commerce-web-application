@@ -9,6 +9,7 @@ import { Oauth2Service } from './auth/oauth2.service';
 import { FooterComponent } from './layout/footer/footer.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { ToastService } from './shared/toast/toast.service';
+import { HomeComponent } from './home/home.component';
 
 @Component({
   standalone: true,
@@ -16,6 +17,7 @@ import { ToastService } from './shared/toast/toast.service';
     RouterModule,
     FontAwesomeModule,
     CommonModule,
+    HomeComponent,
     NavbarComponent,
     FooterComponent,
   ],
@@ -28,6 +30,7 @@ export class AppComponent implements OnInit {
   private faConfig = inject(FaConfig);
   private oauth2Service = inject(Oauth2Service);
   toastService = inject(ToastService);
+  public title = 'ecom-frontend';
   platformId = inject(PLATFORM_ID);
 
   constructor() {
