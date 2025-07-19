@@ -1,63 +1,81 @@
-<div class="text-2xl mb-2">Shopping cart</div>
-<div class="flex flex-col lg:flex-row">
-  <div class="flex-grow me-5 w-full">
+<div class="text-2xl font-semibold mb-4 dark:text-white">Shopping Cart</div>
+
+<div class="flex flex-col lg:flex-row gap-8">
+  <!-- Cart Items Section -->
+  <div class="flex-grow w-full">
     @if (cartQuery.isSuccess() && this.cart.length !== 0) {
-      @for (item of cart; track item.publicId) {
-        <div class="border-t border-gray-200"></div>
-        <div class="flex items-center justify-between">
-          <div class="p-4 flex">
-            <img [src]="'data:' + item.picture.mimeType + ';base64,' + item.picture.file"
-                 alt="{{item.name}}" width="110px" class="max-w-full lg:max-w-none me-5" />
-            <div class="w-40">
-              <a [routerLink]="['/product', item.publicId]">{{ item.name }}</a>
-              <div class="text-sm">{{ item.brand }}</div>
-              <div class="font-bold">{{ item.price | currency }}</div>
-            </div>
-          </div>
-          <div class="flex">
-            <div class="w-32 flex justify-around items-center">
-              <button class="btn btn-sm btn-outline-primary"
-                      (click)="removeQuantityToCart(item.publicId, item.quantity)">-
-              </button>
-              <div>{{ item.quantity }}</div>
-              <button class="btn btn-sm btn-outline-primary"
-                      (click)="addQuantityToCart(item.publicId)">+
-              </button>
-            </div>
-            <div class="ms-5 btn btn-error btn-outline"
-                 (click)="removeItem(item.publicId)">
-              Remove
-            </div>
+    @for (item of cart; track item.publicId) {
+    <div class="border-t border-gray-200 dark:border-gray-700 py-4">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <img [src]="'data:' + item.picture.mimeType + ';base64,' + item.picture.file" [alt]="item.name"
+            class="w-28 h-28 object-cover rounded-md border dark:border-gray-700" />
+
+          <div class="space-y-1">
+            <a [routerLink]="['/product', item.publicId]"
+              class="font-medium text-gray-900 dark:text-gray-100 hover:text-primary transition">
+              {{ item.name }}
+            </a>
+            <div class="text-sm text-gray-500 dark:text-gray-400">{{ item.brand }}</div>
+            <div class="font-bold text-gray-900 dark:text-white">{{ item.price | currency }}</div>
           </div>
         </div>
-      }
+
+        <div class="flex flex-col md:flex-row items-center gap-4">
+          <div class="flex items-center border rounded-md px-2 py-1 dark:border-gray-600">
+            <button (click)="removeQuantityToCart(item.publicId, item.quantity)"
+              class="px-2 text-gray-700 dark:text-gray-300 hover:text-primary">
+              -
+            </button>
+            <div class="px-4">{{ item.quantity }}</div>
+            <button (click)="addQuantityToCart(item.publicId)"
+              class="px-2 text-gray-700 dark:text-gray-300 hover:text-primary">
+              +
+            </button>
+          </div>
+
+          <button (click)="removeItem(item.publicId)"
+            class="text-red-500 border border-red-500 hover:bg-red-500 hover:text-white transition rounded-md px-4 py-1">
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+    }
     } @else if (cartQuery.isPending()) {
-      <div class="flex w-full justify-center">
-        <span class="loading loading-spinner loading-lg"></span>
-      </div>
+    <div class="flex w-full justify-center">
+      <span class="loading loading-spinner loading-lg"></span>
+    </div>
     } @else if (checkIfEmptyCart()) {
-      <div class="flex flex-col items-center justify-center h-60">
-        <div class="font-bold text-2xl">No items in cart</div>
-        <div>Add some items to your cart</div>
-      </div>
+    <div class="flex flex-col items-center justify-center h-60 text-center">
+      <div class="font-bold text-2xl dark:text-white">No items in cart</div>
+      <div class="text-gray-500 dark:text-gray-400">Add some items to your cart</div>
+    </div>
     }
   </div>
-  <div class="bg-gray-100 border-gray-400 p-5 w-full lg:w-96 h-72 mt-6 lg:mt-0 rounded-md">
-    <div class="font-bold">Order Summary</div>
-    <div class="border-t border-gray-300 my-5"></div>
-    <div class="flex justify-between">
+
+  <!-- Order Summary Section -->
+  <div
+    class="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 p-6 w-full lg:w-96 rounded-lg space-y-4">
+    <div class="font-semibold text-lg dark:text-white">Order Summary</div>
+    <div class="border-t border-gray-300 dark:border-gray-700 my-2"></div>
+
+    <div class="flex justify-between text-sm dark:text-gray-300">
       <div>Delivery</div>
       <div>{{ 0 | currency }}</div>
     </div>
-    <div class="border-t border-gray-300 my-5"></div>
-    <div class="flex justify-between font-bold">
+
+    <div class="border-t border-gray-300 dark:border-gray-700 my-2"></div>
+
+    <div class="flex justify-between font-bold dark:text-white">
       <div>Total</div>
       <div>{{ computeTotal() | currency }}</div>
     </div>
-    <div class="border-t border-gray-300 my-5"></div>
-    <button class="btn btn-primary w-full"
-            [disabled]="cartQuery.isSuccess() && cartQuery.data()!.products.length === 0"
-            (click)="checkout()">
+
+    <div class="border-t border-gray-300 dark:border-gray-700 my-4"></div>
+
+    <button class="w-full bg-primary hover:bg-primary/90 text-white py-2 rounded-md transition disabled:opacity-50"
+      [disabled]="cartQuery.isSuccess() && cartQuery.data()!.products.length === 0" (click)="checkout()">
       {{ labelCheckout }}
     </button>
   </div>

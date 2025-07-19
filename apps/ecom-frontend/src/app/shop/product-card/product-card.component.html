@@ -1,40 +1,46 @@
-<div class="card hover:bg-base-200 transition-all bg-base-100 w-full h-full shadow-sm">
-  <figure>
-    <img class="w-full h-[320px] object-fill"
+<div class="card bg-base-100 dark:bg-gray-900 hover:bg-base-200 dark:hover:bg-gray-800 
+            transition-all rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 
+            w-full h-full">
+  <figure class="h-[240px] overflow-hidden border-b border-gray-200 dark:border-gray-700">
+    <img class="w-full h-full object-cover"
       [src]="product().pictures[0].file ? 'data:' + product().pictures[0].mimeType + ';base64,' + product().pictures[0].file : ''"
       [alt]="product().name || 'Product Image'" />
   </figure>
-  <div class="card-body">
-    <h2 class="card-title">
+
+  <div class="card-body flex flex-col justify-between p-4">
+    <h2 class="card-title text-gray-800 dark:text-gray-100 text-lg">
       {{ product().name }}
     </h2>
-    <h3 class="text-lg text-green-500">$ {{ product().price }}</h3>
-    <p class="line-clamp-3">
+
+    <h3 class="text-lg text-green-600 dark:text-green-400 font-semibold">
+      $ {{ product().price }}
+    </h3>
+
+    <p class="line-clamp-3 text-gray-600 dark:text-gray-400 text-sm">
       {{ product().description }}
     </p>
+
     <div class="card-actions mt-4 w-full">
       <div class="flex items-center gap-x-2 w-full justify-between">
         <div class="flex items-center gap-x-2">
           <div class="tooltip" data-tip="View Detail">
-            <button (click)="onClickNavigate()" class="btn btn-soft btn-sm">
+            <button (click)="onClickNavigate()" class="btn btn-outline btn-sm border-gray-300 dark:border-gray-600">
               <fa-icon [icon]="faEye"></fa-icon>
             </button>
           </div>
           <div class="tooltip" data-tip="Favorite">
-            <button (click)="toggleFavoriteItem()" [class]="
-                checkFavoriteItemAlreadyExist()
-                  ? 'btn btn-soft btn-primary btn-sm'
-                  : 'btn btn-soft btn-sm'
-              ">
+            <button (click)="toggleFavoriteItem()"
+              [ngClass]="checkFavoriteItemAlreadyExist() ? 'btn btn-primary btn-sm' : 'btn btn-outline btn-sm border-gray-300 dark:border-gray-600'">
               <fa-icon [icon]="faHeart"></fa-icon>
             </button>
           </div>
         </div>
-        <div class="badge badge-outline capitalize">
+        <div class="badge badge-outline capitalize text-gray-500 dark:text-gray-400">
           {{ product().category.name }}
         </div>
       </div>
-      <button [disabled]="checkItemAlreadyExist()" (click)="addItem()" class="mt-2 w-full btn btn-primary">
+
+      <button [disabled]="checkItemAlreadyExist()" (click)="addItem()" class="mt-3 w-full btn btn-primary">
         <fa-icon [icon]="faCartShopping"></fa-icon>
         Add to Cart
       </button>
