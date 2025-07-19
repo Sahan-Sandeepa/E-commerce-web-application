@@ -98,7 +98,7 @@
 
       <!-- Cart Icon -->
       <div class="relative">
-        <a routerLink="/shopping-cart" class="relative">
+        <a routerLink="/cart" class="relative">
           <fa-icon [icon]="['fas', 'cart-shopping']" class="w-6 h-6 text-gray-600 dark:text-gray-400"></fa-icon>
           <span *ngIf="cartItemQuantity() >= 1" class="absolute -top-2 -right-2 badge badge-primary text-xs">
             {{ cartItemQuantity() }}

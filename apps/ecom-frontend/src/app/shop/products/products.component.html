@@ -1,4 +1,4 @@
-<div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-8 px-6 py-8 max-w-7xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-8 px-6 py-8 max-w-7xl mx-auto items-start">
   <!-- Sidebar Filter -->
   <aside class="space-y-6">
     <ecom-products-filter [sort]="sort()!" [size]="size()!" (productFilter)="onFilterChange($event)">
@@ -6,7 +6,7 @@
   </aside>
 
   <!-- Main Product Section -->
-  <section class="flex flex-col gap-8">
+  <section class="flex flex-col gap-10" [ngStyle]="{'margin-top': '0.2rem'}">
     @if (filteredProductsQuery.isFetching()) {
     <div class="flex justify-center items-center h-64">
       <span class="loading loading-spinner loading-lg text-primary"></span>
@@ -19,8 +19,24 @@
     </div>
     }
     @else if (filteredProductsQuery.isSuccess()) {
+    <!-- First grid: 3 items -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (product of filteredProductsQuery.data().content.slice(0, 3); track product.publicId) {
+      <div class="transition-transform transform hover:-translate-y-1 duration-900 mt-0 p-0">
+        <ecom-product-card [product]="product"></ecom-product-card>
+      </div>
+      <div class="transition-transform transform hover:-translate-y-1 duration-900 mt-0 p-0">
+        <ecom-product-card [product]="product"></ecom-product-card>
+      </div>
+      <div class="transition-transform transform hover:-translate-y-1 duration-900 mt-0 p-0">
+        <ecom-product-card [product]="product"></ecom-product-card>
+      </div>
+      }
+    </div>
+
+    <!-- Second grid: 4 items -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-      @for (product of filteredProductsQuery.data().content; track product.publicId) {
+      @for (product of filteredProductsQuery.data().content.slice(3); track product.publicId) {
       <div class="transition-transform transform hover:-translate-y-1 duration-200">
         <ecom-product-card [product]="product"></ecom-product-card>
       </div>

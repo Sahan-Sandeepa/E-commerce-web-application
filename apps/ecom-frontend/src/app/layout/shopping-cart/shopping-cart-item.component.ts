@@ -1,9 +1,9 @@
-import { Component, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject, input } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faMinus, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { ShoppingCartLocalStorageService } from '../../services/shopping-cart-local-storage.service';
-import { Product } from '../../../type';
+import { Product } from '../../admin/model/product.model';
+import { ShoppingCartLocalStorageService } from '../../shared/service/local-storage/shopping-cart-local-storage.service';
 
 @Component({
   selector: 'ecom-shopping-cart-item',
@@ -21,21 +21,27 @@ export class ShoppingCartItemComponent {
 
   item = input.required<Product>();
 
+  get quantity(): number {
+    return (this.item() as Product & { quantity: number }).quantity;
+  }
+
   incrementItemQuantity() {
-    this.shoppingCartLocalStorageService.updateItem({
+    const updatedItem = {
       ...this.item(),
-      quantity: this.item().quantity + 1,
-    });
+      quantity: this.quantity + 1,
+    };
+    this.shoppingCartLocalStorageService.updateItem(updatedItem);
   }
 
   decrementItemQuantity() {
-    if (this.item().quantity <= 1) {
+    if (this.quantity <= 1) {
       this.shoppingCartLocalStorageService.removeItem(this.item());
     } else {
-      this.shoppingCartLocalStorageService.updateItem({
+      const updatedItem = {
         ...this.item(),
-        quantity: this.item().quantity - 1,
-      });
+        quantity: this.quantity - 1,
+      };
+      this.shoppingCartLocalStorageService.updateItem(updatedItem);
     }
   }
 

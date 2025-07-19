@@ -1,5 +1,6 @@
 :host {
   display: block;
+
   .card {
     cursor: pointer;
   }
@@ -20,5 +21,9 @@
 
   .card-actions {
     margin-top: 1rem;
+  }
+
+  .card {
+    margin-top: -1rem;
   }
 }
