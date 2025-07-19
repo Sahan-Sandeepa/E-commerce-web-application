@@ -1,23 +1,28 @@
-<form [formGroup]="formFilterProducts">
-  <div class="font-bold text-lg mb-2">Size</div>
-  <form [formGroup]="getSizeFormGroup()">
-    @for(size of sizes; track size) {
-      <label class="cursor-pointer label justify-start items-center">
-        <input type="checkbox" checked="checked" class="checkbox checkbox-primary checkbox-md"
-        formControlName="{{size}}"/>
-        <span class="label-text ms-3">{{size}}</span>
+<form [formGroup]="formFilterProducts"
+  class="space-y-8 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+  <div>
+    <h3 class="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-300">Filter by Size</h3>
+    <div [formGroup]="getSizeFormGroup()" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      @for(size of sizes; track size) {
+      <label class="flex items-center space-x-3 cursor-pointer select-none">
+        <input type="checkbox" class="checkbox checkbox-primary" formControlName="{{size}}" />
+        <span class="text-gray-600 dark:text-gray-400">{{ size }}</span>
       </label>
-    }
-  </form>
-  <div class="font-bold text-lg mt-5 mb-2">Sorted By</div>
-  <label class="cursor-pointer label justify-start items-center">
-    <input type="radio" name="sort" value="asc" class="radio radio-primary"
-    formControlName="sort"/>
-    <span class="label-text ms-3">Oldest</span>
-  </label>
-  <label class="cursor-pointer label justify-start items-center">
-    <input type="radio" name="sort" value="desc" class="radio radio-primary"
-           formControlName="sort"/>
-    <span class="label-text ms-3">Newest</span>
-  </label>
+      }
+    </div>
+  </div>
+
+  <div>
+    <h3 class="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-300">Sort by Date</h3>
+    <div class="flex flex-col space-y-3">
+      <label class="flex items-center space-x-3 cursor-pointer">
+        <input type="radio" name="sort" value="asc" class="radio radio-primary" formControlName="sort" />
+        <span class="text-gray-600 dark:text-gray-400">Oldest First</span>
+      </label>
+      <label class="flex items-center space-x-3 cursor-pointer">
+        <input type="radio" name="sort" value="desc" class="radio radio-primary" formControlName="sort" />
+        <span class="text-gray-600 dark:text-gray-400">Newest First</span>
+      </label>
+    </div>
+  </div>
 </form>

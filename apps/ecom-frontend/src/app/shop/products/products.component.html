@@ -1,28 +1,31 @@
-<div class="grid grid-cols-[1fr_6fr] gap-5">
-  <div class="ms-5">
-    <ecom-products-filter
-      [sort]="sort()!"
-      [size]="size()!"
-      (productFilter)="onFilterChange($event)">
+<div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-8 px-6 py-8 max-w-7xl mx-auto">
+  <!-- Sidebar Filter -->
+  <aside class="space-y-6">
+    <ecom-products-filter [sort]="sort()!" [size]="size()!" (productFilter)="onFilterChange($event)">
     </ecom-products-filter>
-  </div>
+  </aside>
 
-  @if (filteredProductsQuery.isSuccess() && filteredProductsQuery.data().content.length !== 0) {
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+  <!-- Main Product Section -->
+  <section class="flex flex-col gap-8">
+    @if (filteredProductsQuery.isFetching()) {
+    <div class="flex justify-center items-center h-64">
+      <span class="loading loading-spinner loading-lg text-primary"></span>
+    </div>
+    }
+    @else if (filteredProductsQuery.isSuccess() && filteredProductsQuery.data().content.length === 0) {
+    <div class="flex flex-col items-center justify-center h-64 text-center gap-2">
+      <p class="text-2xl font-semibold text-gray-600 dark:text-gray-300">No results found</p>
+      <p class="text-gray-500 dark:text-gray-400">Try adjusting your filters.</p>
+    </div>
+    }
+    @else if (filteredProductsQuery.isSuccess()) {
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
       @for (product of filteredProductsQuery.data().content; track product.publicId) {
+      <div class="transition-transform transform hover:-translate-y-1 duration-200">
         <ecom-product-card [product]="product"></ecom-product-card>
+      </div>
       }
     </div>
-  }
-  @else if (filteredProductsQuery.isFetching()) {
-    <div class="flex w-full justify-center">
-      <span class="loading loading-spinner loading-lg"></span>
-    </div>
-  }
-  @else if (filteredProductsQuery.isSuccess() && filteredProductsQuery.data().content.length === 0) {
-    <div class="flex flex-col items-center justify-center">
-      <div class="font-bold text-2xl">No results found</div>
-      <div>Try to change your filters</div>
-    </div>
-  }
+    }
+  </section>
 </div>
