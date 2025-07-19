@@ -16,17 +16,33 @@ export class ShoppingCartLocalStorageService {
   });
 
   constructor() {
-    this.cartItems.set(this.loadItems());
+    if (typeof localStorage !== 'undefined') {
+      this.cartItems.set(this.loadItems());
+    }
   }
 
   private loadItems(): Product[] {
+    if (typeof localStorage === 'undefined') {
+      return [];
+    }
     const data = localStorage.getItem(this.key);
     return data ? JSON.parse(data) : [];
   }
 
   private saveItems(items: Product[]) {
+    if (typeof localStorage === 'undefined') {
+      return;
+    }
     localStorage.setItem(this.key, JSON.stringify(items));
     this.cartItems.set(items);
+  }
+
+  clearItems() {
+    if (typeof localStorage === 'undefined') {
+      return;
+    }
+    localStorage.removeItem(this.key);
+    this.cartItems.set([]);
   }
 
   addItem(item: Product) {
@@ -49,11 +65,6 @@ export class ShoppingCartLocalStorageService {
       }
     });
     this.saveItems(newItems);
-  }
-
-  clearItems() {
-    localStorage.removeItem(this.key);
-    this.cartItems.set([]);
   }
 
   checkItemAlreadyExist(publicId: string) {

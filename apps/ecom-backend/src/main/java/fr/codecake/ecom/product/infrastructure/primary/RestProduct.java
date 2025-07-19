@@ -33,9 +33,9 @@ public class RestProduct {
   }
 
   public RestProduct(String brand, String color, String description,
-                     String name, double price, ProductSize size,
-                     RestCategory category, boolean featured,
-                     List<RestPicture> pictures, UUID publicId, int nbInStock) {
+      String name, double price, ProductSize size,
+      RestCategory category, boolean featured,
+      List<RestPicture> pictures, UUID publicId, int nbInStock) {
     this.brand = brand;
     this.color = color;
     this.description = description;
@@ -55,21 +55,21 @@ public class RestProduct {
 
   public static Product toDomain(RestProduct restProduct) {
     ProductBuilder productBuilder = ProductBuilder.product()
-      .productBrand(new ProductBrand(restProduct.getBrand()))
-      .color(new ProductColor(restProduct.getColor()))
-      .description(new ProductDescription(restProduct.getDescription()))
-      .name(new ProductName(restProduct.getName()))
-      .price(new ProductPrice(restProduct.getPrice()))
-      .size(restProduct.getSize())
-      .category(RestCategory.toDomain(restProduct.getCategory()))
-      .featured(restProduct.isFeatured())
-      .nbInStock(restProduct.getNbInStock());
+        .productBrand(new ProductBrand(restProduct.getBrand()))
+        .color(new ProductColor(restProduct.getColor()))
+        .description(new ProductDescription(restProduct.getDescription()))
+        .name(new ProductName(restProduct.getName()))
+        .price(new ProductPrice(restProduct.getPrice()))
+        .size(restProduct.getSize())
+        .category(RestCategory.toDomain(restProduct.getCategory()))
+        .featured(restProduct.isFeatured())
+        .nbInStock(restProduct.getNbInStock());
 
-    if(restProduct.publicId != null) {
+    if (restProduct.publicId != null) {
       productBuilder.publicId(new PublicId(restProduct.publicId));
     }
 
-    if(restProduct.pictures != null && !restProduct.pictures.isEmpty()) {
+    if (restProduct.pictures != null && !restProduct.pictures.isEmpty()) {
       productBuilder.pictures(RestPicture.toDomain(restProduct.getPictures()));
     }
 
@@ -78,18 +78,18 @@ public class RestProduct {
 
   public static RestProduct fromDomain(Product product) {
     return RestProductBuilder.restProduct()
-      .brand(product.getProductBrand().value())
-      .color(product.getColor().value())
-      .description(product.getDescription().value())
-      .name(product.getName().value())
-      .price(product.getPrice().value())
-      .featured(product.getFeatured())
-      .category(RestCategory.fromDomain(product.getCategory()))
-      .size(product.getSize())
-      .pictures(RestPicture.fromDomain(product.getPictures()))
-      .publicId(product.getPublicId().value())
-      .nbInStock(product.getNbInStock())
-      .build();
+        .brand(product.getProductBrand() != null ? product.getProductBrand().value() : "Unknown Brand")
+        .color(product.getColor() != null ? product.getColor().value() : "Unknown Color")
+        .description(product.getDescription() != null ? product.getDescription().value() : "No Description")
+        .name(product.getName() != null ? product.getName().value() : "No Name")
+        .price(product.getPrice() != null ? product.getPrice().value() : 0.0)
+        .featured(product.getFeatured())
+        .category(product.getCategory() != null ? RestCategory.fromDomain(product.getCategory()) : null)
+        .size(product.getSize())
+        .pictures(product.getPictures() != null ? RestPicture.fromDomain(product.getPictures()) : List.of())
+        .publicId(product.getPublicId() != null ? product.getPublicId().value() : null)
+        .nbInStock(product.getNbInStock())
+        .build();
   }
 
   public String getBrand() {
