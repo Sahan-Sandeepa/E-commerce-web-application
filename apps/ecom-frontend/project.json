@@ -78,6 +78,9 @@
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "proxyConfig": "apps/ecom-frontend/proxy.conf.json"
+      },
       "configurations": {
         "production": {
           "buildTarget": "ecom-frontend:build:production"

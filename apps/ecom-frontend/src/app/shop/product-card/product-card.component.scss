@@ -1,0 +1,24 @@
+:host {
+  display: block;
+  .card {
+    cursor: pointer;
+  }
+
+  img {
+    border-radius: 0.5rem;
+  }
+
+  .badge {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .card-title {
+    font-weight: 600;
+    font-size: 1.125rem;
+  }
+
+  .card-actions {
+    margin-top: 1rem;
+  }
+}
