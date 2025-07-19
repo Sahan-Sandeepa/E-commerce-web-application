@@ -1,4 +1,5 @@
-import { Injectable, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 import { Product } from '../../../admin/model/product.model';
 
 @Injectable({
@@ -6,15 +7,25 @@ import { Product } from '../../../admin/model/product.model';
 })
 export class FavoriteItemsLocalStorageService {
   private readonly key = 'ng_e_commerce_favorite_items';
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly isBrowser = isPlatformBrowser(this.platformId);
 
-  favoriteItems = signal<Product[]>(this.loadItems());
+  favoriteItems = signal<Product[]>([]);
+
+  constructor() {
+    if (this.isBrowser) {
+      this.favoriteItems.set(this.loadItems());
+    }
+  }
 
   private loadItems(): Product[] {
+    if (!this.isBrowser) return [];
     const data = localStorage.getItem(this.key);
     return data ? JSON.parse(data) : [];
   }
 
   private saveItems(items: Product[]) {
+    if (!this.isBrowser) return;
     localStorage.setItem(this.key, JSON.stringify(items));
     this.favoriteItems.set(items);
   }
@@ -43,6 +54,7 @@ export class FavoriteItemsLocalStorageService {
   }
 
   clearItems() {
+    if (!this.isBrowser) return;
     localStorage.removeItem(this.key);
     this.favoriteItems.set([]);
   }

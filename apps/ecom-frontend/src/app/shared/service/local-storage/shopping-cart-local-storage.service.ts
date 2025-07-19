@@ -1,4 +1,6 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { Injectable, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { computed, signal } from '@angular/core';
 import { Product } from '../../../admin/model/product.model';
 
 @Injectable({
@@ -6,6 +8,8 @@ import { Product } from '../../../admin/model/product.model';
 })
 export class ShoppingCartLocalStorageService {
   private readonly key = 'ng_e_commerce_cart_items';
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly isBrowser = isPlatformBrowser(this.platformId);
 
   cartItems = signal<Product[]>([]);
   cartItemQuantity = computed(() => {
@@ -16,33 +20,21 @@ export class ShoppingCartLocalStorageService {
   });
 
   constructor() {
-    if (typeof localStorage !== 'undefined') {
+    if (this.isBrowser) {
       this.cartItems.set(this.loadItems());
     }
   }
 
   private loadItems(): Product[] {
-    if (typeof localStorage === 'undefined') {
-      return [];
-    }
+    if (!this.isBrowser) return [];
     const data = localStorage.getItem(this.key);
     return data ? JSON.parse(data) : [];
   }
 
   private saveItems(items: Product[]) {
-    if (typeof localStorage === 'undefined') {
-      return;
-    }
+    if (!this.isBrowser) return;
     localStorage.setItem(this.key, JSON.stringify(items));
     this.cartItems.set(items);
-  }
-
-  clearItems() {
-    if (typeof localStorage === 'undefined') {
-      return;
-    }
-    localStorage.removeItem(this.key);
-    this.cartItems.set([]);
   }
 
   addItem(item: Product) {
@@ -58,13 +50,15 @@ export class ShoppingCartLocalStorageService {
 
   updateItem(item: Product) {
     const newItems = this.cartItems().map(i => {
-      if (i.publicId !== item.publicId) {
-        return i;
-      } else {
-        return item;
-      }
+      return i.publicId !== item.publicId ? i : item;
     });
     this.saveItems(newItems);
+  }
+
+  clearItems() {
+    if (!this.isBrowser) return;
+    localStorage.removeItem(this.key);
+    this.cartItems.set([]);
   }
 
   checkItemAlreadyExist(publicId: string) {
