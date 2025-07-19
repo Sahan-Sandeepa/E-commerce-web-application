@@ -143,5 +143,4 @@ export class NavbarComponent implements OnInit {
       this.isHoveringUser = false;
     }
   }
-
 }
