@@ -50,6 +50,7 @@ export class NavbarComponent implements OnInit {
   }
 
   isConnected(): boolean {
+    console.log('connectedUserQuery?.data()?.imageUrl', this.connectedUserQuery?.data()?.email);
     return (
       this.connectedUserQuery?.status() === 'success' &&
       this.connectedUserQuery?.data()?.email !== this.oauth2Service.notConnected
