@@ -8,8 +8,14 @@
 body {
   @apply bg-white text-black;
 }
+
 .dark body {
   @apply bg-gray-900 text-white;
+}
+
+body {
+  padding-top: 3rem;
+  /* or more if your navbar is taller */
 }
 
 /* Optional custom utilities... */
