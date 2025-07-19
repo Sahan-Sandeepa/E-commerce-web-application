@@ -31,6 +31,7 @@ export class NavbarComponent implements OnInit {
   nbItemsInCart = 0;
   connectedUserQuery = this.oauth2Service.connectedUserQuery;
   currentTheme: 'light' | 'dark' = 'light';
+  currentOpenDropdown: string | null = null;
 
 
   categoryQuery = injectQuery(() => ({
@@ -142,5 +143,23 @@ export class NavbarComponent implements OnInit {
       this.isUserDropdownClicked = false;
       this.isHoveringUser = false;
     }
+  }
+
+  get hasCategories(): boolean {
+    return !!this.categoryQuery.data()?.content && this.categoryQuery.data()!.content.length > 0;
+  }
+
+  @HostListener('document:click')
+  onDocumentClickOutside() {
+    this.currentOpenDropdown = null;
+  }
+
+  toggleDropdown(label: string, event: MouseEvent) {
+    event.stopPropagation();
+    this.currentOpenDropdown = this.currentOpenDropdown === label ? null : label;
+  }
+
+  isDropdownOpen(label: string): boolean {
+    return this.currentOpenDropdown === label;
   }
 }

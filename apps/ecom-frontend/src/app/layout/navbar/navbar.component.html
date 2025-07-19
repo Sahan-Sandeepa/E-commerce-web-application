@@ -11,41 +11,49 @@
 
       <!-- Navigation Links Desktop -->
       <nav class="hidden lg:flex items-center gap-x-6 text-sm font-medium dark:text-gray-200">
-        <app-dropdown label="All">
+        <app-dropdown label="All" [isOpen]="isDropdownOpen('All')" (toggle)="toggleDropdown('All', $event)">
           <li><a class="block px-4 py-1 hover:text-primary">All Item 1</a></li>
           <li><a class="block px-4 py-1 hover:text-primary">All Item 2</a></li>
         </app-dropdown>
 
-        <app-dropdown label="Men">
+        <app-dropdown label="Men" [isOpen]="isDropdownOpen('Men')" (toggle)="toggleDropdown('Men', $event)">
           <li><a class="block px-4 py-1 hover:text-primary">Men Item 1</a></li>
           <li><a class="block px-4 py-1 hover:text-primary">Men Item 2</a></li>
         </app-dropdown>
 
-        <app-dropdown label="Women">
+        <app-dropdown label="Women" [isOpen]="isDropdownOpen('Women')" (toggle)="toggleDropdown('Women', $event)">
           <li><a class="block px-4 py-1 hover:text-primary">Women Item 1</a></li>
           <li><a class="block px-4 py-1 hover:text-primary">Women Item 2</a></li>
         </app-dropdown>
 
-        <app-dropdown label="Jewelry">
+        <app-dropdown label="Jewelry" [isOpen]="isDropdownOpen('Jewelry')" (toggle)="toggleDropdown('Jewelry', $event)">
           <li><a class="block px-4 py-1 hover:text-primary">Jewelry Item 1</a></li>
           <li><a class="block px-4 py-1 hover:text-primary">Jewelry Item 2</a></li>
         </app-dropdown>
 
-        <app-dropdown label="Electronics">
+        <app-dropdown label="Electronics" [isOpen]="isDropdownOpen('Electronics')"
+          (toggle)="toggleDropdown('Electronics', $event)">
           <li><a class="block px-4 py-1 hover:text-primary">Electronics Item 1</a></li>
           <li><a class="block px-4 py-1 hover:text-primary">Electronics Item 2</a></li>
         </app-dropdown>
 
-        <app-dropdown label="Products">
-          <li *ngFor="let category of categoryQuery.data()?.content">
-            <a [routerLink]="['products']" [queryParams]="{ category: category.publicId }" (click)="onCategoryClick()"
-              class="block px-4 py-1 hover:text-primary">
-              {{ category.name }}
-            </a>
-          </li>
+        <app-dropdown label="Products" [isOpen]="isDropdownOpen('Products')"
+          (toggle)="toggleDropdown('Products', $event)">
+          <ng-container *ngIf="hasCategories; else noCategories">
+            <li *ngFor="let category of categoryQuery.data()?.content">
+              <a [routerLink]="['/products']" [queryParams]="{ category: category.publicId }"
+                (click)="onCategoryClick()" class="block px-4 py-1 hover:text-primary">
+                {{ category.name }}
+              </a>
+            </li>
+          </ng-container>
+          <ng-template #noCategories>
+            <li class="px-4 py-2 text-gray-500">No categories available.</li>
+          </ng-template>
         </app-dropdown>
 
-        <app-dropdown *ngIf="isAdmin" label="Admin">
+        <app-dropdown *ngIf="isAdmin" label="Admin" [isOpen]="isDropdownOpen('Admin')"
+          (toggle)="toggleDropdown('Admin', $event)">
           <li><a routerLink="/admin/categories/list" class="block px-4 py-1 hover:text-primary">Categories</a></li>
           <li><a routerLink="/admin/products/list" class="block px-4 py-1 hover:text-primary">Products</a></li>
           <li><a routerLink="/admin/orders/list" class="block px-4 py-1 hover:text-primary">Orders</a></li>
@@ -99,11 +107,9 @@
       </div>
 
       <!-- Theme Switcher -->
-      <button 
-        (click)="toggleTheme(currentTheme === 'dark' ? 'light' : 'dark')"
+      <button (click)="toggleTheme(currentTheme === 'dark' ? 'light' : 'dark')"
         class="p-2 rounded-full border dark:border-gray-600 border-gray-300 dark:bg-gray-700 bg-white transition hover:bg-gray-200 dark:hover:bg-gray-600"
-        title="Toggle light/dark mode"
-      >
+        title="Toggle light/dark mode">
         <fa-icon *ngIf="currentTheme === 'dark'" [icon]="['fas', 'sun']" class="text-yellow-400"></fa-icon>
         <fa-icon *ngIf="currentTheme === 'light'" [icon]="['fas', 'moon']" class="text-gray-800"></fa-icon>
       </button>

@@ -1,20 +1,25 @@
-import { CommonModule } from '@angular/common';
-import { Component, HostListener, Input } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 
 @Component({
   standalone: true,
   selector: 'app-dropdown',
   imports: [CommonModule],
   template: `
-    <div class="relative"
-         (mouseenter)="onMouseEnter()"
-         (mouseleave)="onMouseLeave()"
-         (click)="toggleDropdown($event)">
-      <button [class.underline]="isHovering || isClicked" class="transition">
+    <div class="relative inline-block"
+         (mouseenter)="isHovering = true"
+         (mouseleave)="isHovering = false">
+      <button
+        class="transition px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary"
+        (click)="onToggle($event)"
+        [class.underline]="isHovering || isOpen"
+        [attr.aria-expanded]="isHovering || isOpen">
         {{ label }}
       </button>
-      <ul *ngIf="isHovering || isClicked"
-          class="absolute bg-base-100 dark:bg-gray-800 dark:text-white rounded shadow-lg p-2 mt-2 w-48">
+
+      <ul *ngIf="isHovering || isOpen"
+        class="absolute left-0 mt-2 w-48 rounded shadow-lg p-2 bg-white dark:bg-gray-800 dark:text-white z-[9999] border border-gray-200 dark:border-gray-700"
+        role="menu">
         <ng-content></ng-content>
       </ul>
     </div>
@@ -23,26 +28,13 @@ import { Component, HostListener, Input } from '@angular/core';
 })
 export class DropdownComponent {
   @Input() label!: string;
+  @Input() isOpen = false;
+  @Output() toggle = new EventEmitter<MouseEvent>();
+
   isHovering = false;
-  isClicked = false;
 
-  onMouseEnter() {
-    if (!this.isClicked) this.isHovering = true;
-  }
-
-  onMouseLeave() {
-    if (!this.isClicked) this.isHovering = false;
-  }
-
-  toggleDropdown(event: MouseEvent) {
+  onToggle(event: MouseEvent) {
     event.stopPropagation();
-    this.isClicked = !this.isClicked;
-    this.isHovering = this.isClicked;
-  }
-
-  @HostListener('document:click')
-  closeDropdownOnClickOutside() {
-    this.isClicked = false;
-    this.isHovering = false;
+    this.toggle.emit(event);
   }
 }
