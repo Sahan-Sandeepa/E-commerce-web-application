@@ -27,7 +27,6 @@ public class UserSynchronizer {
   public void syncWithIdp(Jwt jwtToken, boolean forceResync) {
     Map<String, Object> claims = jwtToken.getClaims();
     List<String> rolesFromToken = AuthenticatedUser.extractRolesFromToken(jwtToken);
-    System.out.println("Roles from Token: " + rolesFromToken);
     Map<String, Object> userInfo = kindeService.getUserInfo(claims.get("sub").toString());
     User user = User.fromTokenAttributes(userInfo, rolesFromToken);
     Optional<User> existingUserOpt = userRepository.getOneByEmail(user.getEmail());
@@ -36,7 +35,6 @@ public class UserSynchronizer {
       User existingUser = existingUserOpt.get();
 
       Object updatedAtObj = claims.get(UPDATE_AT_KEY);
-      System.out.println("UPDATE_AT_KEY present: " + updatedAtObj);
 
       Instant idpModifiedDate = null;
       if (updatedAtObj != null) {
