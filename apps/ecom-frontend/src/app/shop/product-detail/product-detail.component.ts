@@ -1,16 +1,16 @@
-import { Component, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { injectParams } from 'ngxtension/inject-params';
-import { UserProductService } from '../../shared/service/user-product.service';
+import { Component, effect, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastService } from '../../shared/toast/toast.service';
-import { Pagination } from '../../shared/model/request.model';
-import { interval, lastValueFrom, take } from 'rxjs';
-import { injectQuery } from '@tanstack/angular-query-experimental';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { ProductCardComponent } from '../product-card/product-card.component';
-import { CartService } from '../cart.service';
+import { injectQuery } from '@tanstack/angular-query-experimental';
+import { injectParams } from 'ngxtension/inject-params';
+import { interval, lastValueFrom, take } from 'rxjs';
 import { Product } from '../../admin/model/product.model';
+import { Pagination } from '../../shared/model/request.model';
+import { UserProductService } from '../../shared/service/user-product.service';
+import { ToastService } from '../../shared/toast/toast.service';
+import { CartService } from '../cart.service';
+import { ProductCardComponent } from '../product-card/product-card.component';
 
 @Component({
   selector: 'ecom-product-detail',
@@ -100,5 +100,9 @@ export class ProductDetailComponent {
         this.labelAddToCart = 'Add to cart';
         this.iconAddToCart = 'shopping-cart';
       });
+  }
+
+  get product() {
+    return this.productQuery.isSuccess() ? this.productQuery.data() : undefined;
   }
 }

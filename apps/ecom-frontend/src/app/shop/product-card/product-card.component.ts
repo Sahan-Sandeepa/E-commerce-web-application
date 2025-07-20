@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, input } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCartShopping, faEye, faHeart } from '@fortawesome/free-solid-svg-icons';
-import { Router, RouterLink } from '@angular/router';
 import { Product } from '../../admin/model/product.model';
-import { FavoriteItemsLocalStorageService } from '../../shared/service/local-storage/favorite-items-local-storage.service';
 import { Oauth2Service } from '../../auth/oauth2.service';
+import { FavoriteItemsLocalStorageService } from '../../shared/service/local-storage/favorite-items-local-storage.service';
 import { CartService } from '../cart.service';
 
 @Component({
@@ -65,7 +65,7 @@ export class ProductCardComponent {
   }
 
   onClickNavigate(): void {
-    this.router.navigate(['/products', this.product().publicId]);
+    this.router.navigate(['product', this.product().publicId]);
   }
 
   handleAddToCartWithLogin(): void {
