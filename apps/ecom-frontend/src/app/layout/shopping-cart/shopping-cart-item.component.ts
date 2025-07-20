@@ -3,7 +3,7 @@ import { Component, inject, input } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faMinus, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { Product } from '../../admin/model/product.model';
-import { ShoppingCartLocalStorageService } from '../../shared/service/local-storage/shopping-cart-local-storage.service';
+import { CartService } from '../../shop/cart.service';
 
 @Component({
   selector: 'ecom-shopping-cart-item',
@@ -13,39 +13,31 @@ import { ShoppingCartLocalStorageService } from '../../shared/service/local-stor
   styleUrl: './shopping-cart-item.component.scss',
 })
 export class ShoppingCartItemComponent {
-  private readonly shoppingCartLocalStorageService = inject(ShoppingCartLocalStorageService);
+  private readonly cartService = inject(CartService); //injected
 
   faPlus = faPlus;
   faMinus = faMinus;
   faTrashCan = faTrashCan;
 
-  item = input.required<Product>();
+  item = input.required<Product & { quantity: number }>();
 
   get quantity(): number {
-    return (this.item() as Product & { quantity: number }).quantity;
+    return this.item().quantity;
   }
 
-  incrementItemQuantity() {
-    const updatedItem = {
-      ...this.item(),
-      quantity: this.quantity + 1,
-    };
-    this.shoppingCartLocalStorageService.updateItem(updatedItem);
+  incrementItemQuantity(): void {
+    this.cartService.addToCart(this.item().publicId, 'add');
   }
 
-  decrementItemQuantity() {
+  decrementItemQuantity(): void {
     if (this.quantity <= 1) {
-      this.shoppingCartLocalStorageService.removeItem(this.item());
+      this.cartService.removeFromCart(this.item().publicId);
     } else {
-      const updatedItem = {
-        ...this.item(),
-        quantity: this.quantity - 1,
-      };
-      this.shoppingCartLocalStorageService.updateItem(updatedItem);
+      this.cartService.addToCart(this.item().publicId, 'remove');
     }
   }
 
-  removeItemQuantity() {
-    this.shoppingCartLocalStorageService.removeItem(this.item());
+  removeItemQuantity(): void {
+    this.cartService.removeFromCart(this.item().publicId);
   }
 }

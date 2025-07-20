@@ -1,150 +1,115 @@
-import { inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, map, Observable } from 'rxjs';
-import { Cart, CartItemAdd, StripeSession } from './cart.model';
 import { isPlatformBrowser } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Cart, CartItemAdd, StripeSession } from './cart.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  platformId = inject(PLATFORM_ID);
-  http = inject(HttpClient);
+  private readonly keyCartStorage = 'cart';
+  private readonly keySessionId = 'stripe-session-id';
 
-  private keyCartStorage = 'cart';
-  private keySessionId = 'stripe-session-id';
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly http = inject(HttpClient);
 
-  private addedToCart$ = new BehaviorSubject<Array<CartItemAdd>>([]);
-  addedToCart = this.addedToCart$.asObservable();
+  private readonly addedToCart$ = new BehaviorSubject<CartItemAdd[]>([]);
+  readonly addedToCart = this.addedToCart$.asObservable();
 
   constructor() {
-    const cartFromLocalStorage = this.getCartFromLocalStorage();
-    this.addedToCart$.next(cartFromLocalStorage);
+    const cart = this.getCartFromLocalStorage();
+    this.addedToCart$.next(cart);
   }
 
-  private getCartFromLocalStorage(): Array<CartItemAdd> {
-    if (isPlatformBrowser(this.platformId)) {
-      const cartProducts = localStorage.getItem(this.keyCartStorage);
-      if (cartProducts) {
-        return JSON.parse(cartProducts) as CartItemAdd[];
-      } else {
-        return [];
+  private isBrowser(): boolean {
+    return isPlatformBrowser(this.platformId);
+  }
+
+  private getCartFromLocalStorage(): CartItemAdd[] {
+    if (!this.isBrowser()) return [];
+    const data = localStorage.getItem(this.keyCartStorage);
+    return data ? JSON.parse(data) : [];
+  }
+
+  private saveCartToLocalStorage(cart: CartItemAdd[]) {
+    if (!this.isBrowser()) return;
+    localStorage.setItem(this.keyCartStorage, JSON.stringify(cart));
+    this.addedToCart$.next(cart);
+  }
+
+  addToCart(publicId: string, command: 'add' | 'remove' = 'add'): void {
+    if (!this.isBrowser()) return;
+
+    const cart = this.getCartFromLocalStorage();
+    const existing = cart.find(item => item.publicId === publicId);
+
+    if (existing) {
+      if (command === 'add') {
+        existing.quantity++;
+      } else if (command === 'remove') {
+        existing.quantity = Math.max(1, existing.quantity - 1);
       }
     } else {
-      return [];
+      cart.push({ publicId, quantity: 1 });
     }
-  }
 
-  addToCart(publicId: string, command: 'add' | 'remove'): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const itemToAdd: CartItemAdd = { publicId, quantity: 1 };
-      const cartFromLocalStorage = this.getCartFromLocalStorage();
-      if (cartFromLocalStorage.length !== 0) {
-        const productExist = cartFromLocalStorage.find(
-          (item) => item.publicId === publicId
-        );
-        if (productExist) {
-          if (command === 'add') {
-            productExist.quantity++;
-          } else if (command === 'remove') {
-            productExist.quantity--;
-          }
-        } else {
-          cartFromLocalStorage.push(itemToAdd);
-        }
-      } else {
-        cartFromLocalStorage.push(itemToAdd);
-      }
-      localStorage.setItem(
-        this.keyCartStorage,
-        JSON.stringify(cartFromLocalStorage)
-      );
-      this.addedToCart$.next(cartFromLocalStorage);
-    }
+    this.saveCartToLocalStorage(cart);
   }
 
   removeFromCart(publicId: string): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const cartFromLocalStorage = this.getCartFromLocalStorage();
-      const productExist = cartFromLocalStorage.find(
-        (item) => item.publicId === publicId
-      );
-      if (productExist) {
-        cartFromLocalStorage.splice(
-          cartFromLocalStorage.indexOf(productExist),
-          1
-        );
-        localStorage.setItem(
-          this.keyCartStorage,
-          JSON.stringify(cartFromLocalStorage)
-        );
-        this.addedToCart$.next(cartFromLocalStorage);
-      }
-    }
+    if (!this.isBrowser()) return;
+
+    const cart = this.getCartFromLocalStorage().filter(item => item.publicId !== publicId);
+    this.saveCartToLocalStorage(cart);
+  }
+
+  clearCart(): void {
+    if (!this.isBrowser()) return;
+    localStorage.removeItem(this.keyCartStorage);
+    this.addedToCart$.next([]);
   }
 
   getCartDetail(): Observable<Cart> {
-    const cartFromLocalStorage = this.getCartFromLocalStorage();
-    const publicIdsForURL = cartFromLocalStorage.reduce(
-      (acc, item) => `${acc}${acc.length > 0 ? ',' : ''}${item.publicId}`,
-      ''
+    const cart = this.getCartFromLocalStorage();
+    const publicIds = cart.map(c => c.publicId).join(',');
+
+    return this.http.get<Cart>(`${environment.apiUrl}/orders/get-cart-details`, {
+      params: { productIds: publicIds },
+    }).pipe(
+      map(response => this.mapQuantity(response, cart))
     );
-    return this.http
-      .get<Cart>(`${environment.apiUrl}/orders/get-cart-details`, {
-        params: { productIds: publicIdsForURL },
-      })
-      .pipe(map((cart) => this.mapQuantity(cart, cartFromLocalStorage)));
   }
 
-  private mapQuantity(
-    cart: Cart,
-    cartFromLocalStorage: Array<CartItemAdd>
-  ): Cart {
-    for (const cartItem of cartFromLocalStorage) {
-      const foundProduct = cart.products.find(
-        (item) => item.publicId === cartItem.publicId
-      );
-      if (foundProduct) {
-        foundProduct.quantity = cartItem.quantity;
+  private mapQuantity(cart: Cart, cartFromStorage: CartItemAdd[]): Cart {
+    for (const item of cartFromStorage) {
+      const match = cart.products.find(p => p.publicId === item.publicId);
+      if (match) {
+        match.quantity = item.quantity;
       }
     }
     return cart;
   }
 
-  initPaymentSession(cart: Array<CartItemAdd>): Observable<StripeSession> {
-    return this.http.post<StripeSession>(
-      `${environment.apiUrl}/orders/init-payment`,
-      cart
-    );
+  initPaymentSession(cart: CartItemAdd[]): Observable<StripeSession> {
+    return this.http.post<StripeSession>(`${environment.apiUrl}/orders/init-payment`, cart);
   }
 
-  storeSessionId(sessionId: string) {
-    if (isPlatformBrowser(this.platformId)) {
+  storeSessionId(sessionId: string): void {
+    if (this.isBrowser()) {
       localStorage.setItem(this.keySessionId, sessionId);
     }
   }
 
   getSessionId(): string {
-    if (isPlatformBrowser(this.platformId)) {
-      const stripeSessionId = localStorage.getItem(this.keySessionId);
-      if (stripeSessionId) {
-        return stripeSessionId;
-      }
-    }
-    return '';
+    if (!this.isBrowser()) return '';
+    return localStorage.getItem(this.keySessionId) ?? '';
   }
 
   deleteSessionId(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    if (this.isBrowser()) {
       localStorage.removeItem(this.keySessionId);
-    }
-  }
-
-  clearCart() {
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.removeItem(this.keyCartStorage);
-      this.addedToCart$.next([]);
     }
   }
 }
