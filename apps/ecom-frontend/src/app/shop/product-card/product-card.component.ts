@@ -1,11 +1,12 @@
-import { Component, computed, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { Component, computed, inject, input } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faEye, faHeart, faCartShopping } from '@fortawesome/free-solid-svg-icons';
-import { ShoppingCartLocalStorageService } from '../../shared/service/local-storage/shopping-cart-local-storage.service'; 
-import { FavoriteItemsLocalStorageService } from '../../shared/service/local-storage/favorite-items-local-storage.service'; 
-import { Product } from '../../admin/model/product.model'; 
+import { faCartShopping, faEye, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { Router, RouterLink } from '@angular/router';
+import { Product } from '../../admin/model/product.model';
+import { FavoriteItemsLocalStorageService } from '../../shared/service/local-storage/favorite-items-local-storage.service';
+import { Oauth2Service } from '../../auth/oauth2.service';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'ecom-product-card',
@@ -15,33 +16,47 @@ import { Product } from '../../admin/model/product.model';
   styleUrl: './product-card.component.scss',
 })
 export class ProductCardComponent {
-  private readonly shoppingCartLocalStorageService = inject(ShoppingCartLocalStorageService);
+  private readonly cartService = inject(CartService); //injected
   private readonly favoriteItemsLocalStorageService = inject(FavoriteItemsLocalStorageService);
   private readonly router = inject(Router);
+  oauth2Service = inject(Oauth2Service);
 
+  connectedUserQuery = this.oauth2Service.connectedUserQuery;
   faHeart = faHeart;
   faEye = faEye;
   faCartShopping = faCartShopping;
 
   product = input.required<Product>();
 
-  cartItems = computed(() => this.shoppingCartLocalStorageService.cartItems());
+  //Check if this product is already in the cart
+  isInCart = computed(() => {
+    const cart = this.cartService['addedToCart$'].getValue(); // or use a signal version later
+    return cart.some(item => item.publicId === this.product().publicId);
+  });
 
-  addItem() {
-    this.shoppingCartLocalStorageService.addItem({
-      ...this.product(),
-    });
+  addItem(): void {
+    this.cartService.addToCart(this.product().publicId);
   }
 
-  checkItemAlreadyExist() {
-    return this.shoppingCartLocalStorageService.checkItemAlreadyExist(this.product().publicId);
+  login(): void {
+    this.oauth2Service.login();
+    this.connectedUserQuery?.status() === 'success'
+      ? this.handleAddToCartWithLogin()
+      : this.showLoginFailedMessage();
   }
 
-  checkFavoriteItemAlreadyExist() {
+  isConnected(): boolean {
+    return (
+      this.connectedUserQuery?.status() === 'success' &&
+      this.connectedUserQuery?.data()?.email !== this.oauth2Service.notConnected
+    );
+  }
+
+  checkFavoriteItemAlreadyExist(): boolean {
     return this.favoriteItemsLocalStorageService.checkItemAlreadyExist(this.product().publicId);
   }
 
-  toggleFavoriteItem() {
+  toggleFavoriteItem(): void {
     if (this.checkFavoriteItemAlreadyExist()) {
       this.favoriteItemsLocalStorageService.removeItem(this.product());
     } else {
@@ -49,7 +64,15 @@ export class ProductCardComponent {
     }
   }
 
-  onClickNavigate() {
+  onClickNavigate(): void {
     this.router.navigate(['/products', this.product().publicId]);
+  }
+
+  handleAddToCartWithLogin(): void {
+    this.addItem();
+  }
+
+  showLoginFailedMessage(): void {
+    console.warn('Login failed. Please try again.');
   }
 }

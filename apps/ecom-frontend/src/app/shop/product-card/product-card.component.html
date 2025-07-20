@@ -1,49 +1,61 @@
-<div class="card bg-base-100 dark:bg-gray-900 hover:bg-base-200 dark:hover:bg-gray-800 
-            transition-all rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 
-            w-full h-full">
-  <figure class="h-[240px] overflow-hidden border-b border-gray-200 dark:border-gray-700">
+<div
+  class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all w-full h-full flex flex-col overflow-hidden">
+  <!-- Image -->
+  <div class="h-52 overflow-hidden border-b border-gray-200 dark:border-gray-700">
     <img class="w-full h-full object-cover"
       [src]="product().pictures[0].file ? 'data:' + product().pictures[0].mimeType + ';base64,' + product().pictures[0].file : ''"
       [alt]="product().name || 'Product Image'" />
-  </figure>
+  </div>
 
-  <div class="card-body flex flex-col justify-between p-4">
-    <h2 class="card-title text-gray-800 dark:text-gray-100 text-lg">
-      {{ product().name }}
-    </h2>
+  <!-- Body -->
+  <div class="flex flex-col flex-1 justify-between p-4">
+    <!-- Name & Price -->
+    <div>
+      <h2 class="text-base font-semibold text-gray-800 dark:text-gray-100 mb-1 line-clamp-1">
+        {{ product().name }}
+      </h2>
+      <p class="text-green-600 dark:text-green-400 font-bold text-sm mb-2">$ {{ product().price }}</p>
+      <p class="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">
+        {{ product().description }}
+      </p>
+    </div>
 
-    <h3 class="text-lg text-green-600 dark:text-green-400 font-semibold">
-      $ {{ product().price }}
-    </h3>
-
-    <p class="line-clamp-3 text-gray-600 dark:text-gray-400 text-sm">
-      {{ product().description }}
-    </p>
-
-    <div class="card-actions mt-4 w-full">
-      <div class="flex items-center gap-x-2 w-full justify-between">
-        <div class="flex items-center gap-x-2">
-          <div class="tooltip" data-tip="View Detail">
-            <button (click)="onClickNavigate()" class="btn btn-outline btn-sm border-gray-300 dark:border-gray-600">
-              <fa-icon [icon]="faEye"></fa-icon>
-            </button>
-          </div>
-          <div class="tooltip" data-tip="Favorite">
-            <button (click)="toggleFavoriteItem()"
-              [ngClass]="checkFavoriteItemAlreadyExist() ? 'btn btn-primary btn-sm' : 'btn btn-outline btn-sm border-gray-300 dark:border-gray-600'">
-              <fa-icon [icon]="faHeart"></fa-icon>
-            </button>
-          </div>
+    <!-- Actions & Category -->
+    <div class="mt-4">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2">
+          <button (click)="onClickNavigate()" class="btn btn-sm btn-ghost tooltip" data-tip="View Detail">
+            <fa-icon [icon]="faEye" class="text-gray-600 dark:text-gray-300"></fa-icon>
+          </button>
+          <button (click)="toggleFavoriteItem()"
+            [ngClass]="checkFavoriteItemAlreadyExist() ? 'btn btn-sm btn-primary' : 'btn btn-sm'" class="tooltip"
+            data-tip="Favorite">
+            <fa-icon [icon]="faHeart"></fa-icon>
+          </button>
         </div>
-        <div class="badge badge-outline capitalize text-gray-500 dark:text-gray-400">
-          {{ product().category.name }}
+        <div>
+          <div class="badge badge-outline capitalize text-xs text-gray-600 dark:text-gray-300 border">
+            {{ product().category.name }}
+          </div>
         </div>
       </div>
 
-      <button [disabled]="checkItemAlreadyExist()" (click)="addItem()" class="mt-3 w-full btn btn-primary">
-        <fa-icon [icon]="faCartShopping"></fa-icon>
-        Add to Cart
-      </button>
+      <!-- Add to Cart -->
+      <div *ngIf="!isConnected()">
+        <button (click)="login()"
+          class="btn btn-primary btn-sm w-full bg-sky-500 px-1 py-1 text-white hover:bg-sky-400">
+          <fa-icon [icon]="faCartShopping" class="mr-2"></fa-icon>
+          Add to Cart
+        </button>
+      </div>
+
+      <div *ngIf="isConnected()">
+        <button [disabled]="isInCart()" (click)="addItem()"
+          [ngClass]="isInCart() ? 'btn btn-primary btn-sm w-full bg-sky-200 px-1 py-1 text-white hover:bg-sky-200' : 'btn btn-primary btn-sm w-full bg-sky-500 px-1 py-1 text-white hover:bg-sky-400'">
+          <fa-icon [icon]="faCartShopping" class="mr-2"></fa-icon>
+          Add to Cart
+        </button>
+      </div>
     </div>
   </div>
 </div>
