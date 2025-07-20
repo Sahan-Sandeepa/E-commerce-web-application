@@ -2,7 +2,9 @@ logging:
   level:
     ROOT: INFO
     org.hibernate.SQL: INFO
-    fr.codecake.ecom: INFO
+    org.springframework.web: DEBUG
+    org.springframework.http.converter.json: DEBUG
+    fr.codecake.ecom: DEBUG
 
 spring:
   datasource:

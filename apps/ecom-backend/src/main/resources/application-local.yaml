@@ -3,6 +3,8 @@ logging:
     ROOT: INFO
     org.hibernate.SQL: DEBUG
     org.springframework.security: INFO
+    org.springframework.web: DEBUG
+    org.springframework.http.converter.json: DEBUG
     fr.codecake.ecom: DEBUG
     org.apache.hc.client5.http: INFO
 
