@@ -28,6 +28,7 @@ export class HomeComponent {
 
   productsResource = signal<Product[]>([]);
   loading = signal(true);
+  displayCount = signal(9);
 
   constructor() {
     this.title.setTitle('Home');
@@ -45,6 +46,8 @@ export class HomeComponent {
     this.loadProducts();
   }
 
+
+
   private loadProducts() {
     this.apiService.getProducts().subscribe({
       next: (products) => {
@@ -56,6 +59,18 @@ export class HomeComponent {
         this.loading.set(false);
       },
     });
+  }
+
+  showMore() {
+    this.displayCount.set(this.displayCount() + 9);
+  }
+
+  get visibleProducts() {
+    return this.productsResource().slice(0, this.displayCount());
+  }
+
+  isShowMoreVisible() {
+    return this.displayCount() < this.productsResource().length;
   }
 
   isLoading() {
