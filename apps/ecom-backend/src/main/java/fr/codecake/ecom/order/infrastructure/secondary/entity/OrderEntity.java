@@ -21,7 +21,6 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import org.jilt.Builder;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -49,7 +48,7 @@ public class OrderEntity extends AbstractAuditingEntity<Long> {
   private String stripeSessionId;
 
   @OneToMany(mappedBy = "id.order", cascade = CascadeType.REMOVE)
-  private Set<OrderedProductEntity> orderedProducts = new HashSet<>();
+  private Set<OrderedProductEntity> orderedProducts;
 
   @ManyToOne
   @JoinColumn(name = "fk_customer", nullable = false)
@@ -59,7 +58,7 @@ public class OrderEntity extends AbstractAuditingEntity<Long> {
   }
 
   public OrderEntity(Long id, UUID publicId, OrderStatus status, String stripeSessionId,
-                     Set<OrderedProductEntity> orderedProducts, UserEntity user) {
+      Set<OrderedProductEntity> orderedProducts, UserEntity user) {
     this.id = id;
     this.publicId = publicId;
     this.status = status;
@@ -70,28 +69,28 @@ public class OrderEntity extends AbstractAuditingEntity<Long> {
 
   public static OrderEntity from(Order order) {
     Set<OrderedProductEntity> orderedProductEntities = order.getOrderedProducts()
-      .stream().map(OrderedProductEntity::from).collect(Collectors.toSet());
+        .stream().map(OrderedProductEntity::from).collect(Collectors.toSet());
 
     return OrderEntityBuilder.orderEntity()
-      .publicId(order.getPublicId().value())
-      .status(order.getStatus())
-      .stripeSessionId(order.getStripeId())
-      .orderedProducts(orderedProductEntities)
-      .user(UserEntity.from(order.getUser()))
-      .build();
+        .publicId(order.getPublicId().value())
+        .status(order.getStatus())
+        .stripeSessionId(order.getStripeId())
+        .orderedProducts(orderedProductEntities)
+        .user(UserEntity.from(order.getUser()))
+        .build();
   }
 
   public static Order toDomain(OrderEntity orderEntity) {
     Set<OrderedProduct> orderedProducts = orderEntity.getOrderedProducts().stream()
-      .map(OrderedProductEntity::toDomain).collect(Collectors.toSet());
+        .map(OrderedProductEntity::toDomain).collect(Collectors.toSet());
 
     return OrderBuilder.order()
-      .publicId(new PublicId(orderEntity.getPublicId()))
-      .status(orderEntity.getStatus())
-      .stripeId(orderEntity.getStripeSessionId())
-      .user(UserEntity.toDomain(orderEntity.getUser()))
-      .orderedProducts(orderedProducts.stream().toList())
-      .build();
+        .publicId(new PublicId(orderEntity.getPublicId()))
+        .status(orderEntity.getStatus())
+        .stripeId(orderEntity.getStripeSessionId())
+        .user(UserEntity.toDomain(orderEntity.getUser()))
+        .orderedProducts(orderedProducts.stream().toList())
+        .build();
   }
 
   @Override
@@ -145,9 +144,12 @@ public class OrderEntity extends AbstractAuditingEntity<Long> {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof OrderEntity order)) return false;
-    return Objects.equals(publicId, order.publicId) && status == order.status && Objects.equals(stripeSessionId, order.stripeSessionId);
+    if (this == o)
+      return true;
+    if (!(o instanceof OrderEntity order))
+      return false;
+    return Objects.equals(publicId, order.publicId) && status == order.status
+        && Objects.equals(stripeSessionId, order.stripeSessionId);
   }
 
   @Override

@@ -20,7 +20,7 @@ public class SpringDataOrderRepository implements OrderRepository {
   private final JpaOrderedProductRepository jpaOrderedProductRepository;
 
   public SpringDataOrderRepository(JpaOrderRepository jpaOrderRepository,
-                                   JpaOrderedProductRepository jpaOrderedProductRepository) {
+      JpaOrderedProductRepository jpaOrderedProductRepository) {
     this.jpaOrderRepository = jpaOrderRepository;
     this.jpaOrderedProductRepository = jpaOrderedProductRepository;
   }
@@ -31,7 +31,7 @@ public class SpringDataOrderRepository implements OrderRepository {
     OrderEntity orderSavedEntity = jpaOrderRepository.save(orderEntityToCreate);
 
     orderSavedEntity.getOrderedProducts()
-      .forEach(orderedProductEntity -> orderedProductEntity.getId().setOrder(orderSavedEntity));
+        .forEach(orderedProductEntity -> orderedProductEntity.getId().setOrder(orderSavedEntity));
     jpaOrderedProductRepository.saveAll(orderSavedEntity.getOrderedProducts());
   }
 
@@ -43,17 +43,23 @@ public class SpringDataOrderRepository implements OrderRepository {
   @Override
   public Optional<Order> findByStripeSessionId(StripeSessionInformation stripeSessionInformation) {
     return jpaOrderRepository.findByStripeSessionId(stripeSessionInformation.stripeSessionId().value())
-      .map(OrderEntity::toDomain);
+        .map(OrderEntity::toDomain);
   }
 
   @Override
   public Page<Order> findAllByUserPublicId(UserPublicId userPublicId, Pageable pageable) {
     return jpaOrderRepository.findAllByUserPublicId(userPublicId.value(), pageable)
-      .map(OrderEntity::toDomain);
+        .map(OrderEntity::toDomain);
   }
 
   @Override
   public Page<Order> findAll(Pageable pageable) {
     return jpaOrderRepository.findAll(pageable).map(OrderEntity::toDomain);
+  }
+
+  @Override
+  public void deleteByPublicId(PublicId orderPublicId) {
+    Optional<OrderEntity> entity = jpaOrderRepository.findByPublicId(orderPublicId.value());
+    entity.ifPresent(jpaOrderRepository::delete);
   }
 }

@@ -22,4 +22,5 @@ public interface OrderRepository {
 
   Page<Order> findAll(Pageable pageable);
 
+  void deleteByPublicId(PublicId orderPublicId);
 }

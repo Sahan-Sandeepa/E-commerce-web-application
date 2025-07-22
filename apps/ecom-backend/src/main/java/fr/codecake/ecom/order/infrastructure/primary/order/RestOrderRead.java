@@ -8,9 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Builder
-public record RestOrderRead(UUID publicId,
-                            OrderStatus status,
-                            List<RestOrderedItemRead> orderedItems) {
+public record RestOrderRead(UUID publicId, OrderStatus status, List<RestOrderedItemRead> orderedItems) {
 
   public static RestOrderRead from(Order order) {
     return RestOrderReadBuilder.restOrderRead()

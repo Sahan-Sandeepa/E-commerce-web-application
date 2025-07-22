@@ -79,4 +79,8 @@ export class ApiService {
     deleteAdminProduct(publicId: string): Observable<any> {
         return this.http.delete(`${this.baseUrl}/products`, { params: { publicId } });
     }
+
+    deleteOrder(publicId: string): Observable<any> {
+        return this.http.delete(`${this.baseUrl}/orders`, { params: { publicId } });
+    }
 }

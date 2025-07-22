@@ -36,9 +36,9 @@ public class OrderApplicationService {
   private final OrderReader orderReader;
 
   public OrderApplicationService(ProductsApplicationService productsApplicationService,
-                                 UsersApplicationService usersApplicationService,
-                                 OrderRepository orderRepository,
-                                 StripeService stripeService) {
+      UsersApplicationService usersApplicationService,
+      OrderRepository orderRepository,
+      StripeService stripeService) {
     this.productsApplicationService = productsApplicationService;
     this.usersApplicationService = usersApplicationService;
     this.cartReader = new CartReader();
@@ -79,5 +79,10 @@ public class OrderApplicationService {
   @Transactional(readOnly = true)
   public Page<Order> findOrdersForAdmin(Pageable pageable) {
     return orderReader.findAll(pageable);
+  }
+
+  @Transactional
+  public void deleteOrderByPublicId(PublicId publicId) {
+    orderUpdater.deleteOrderByPublicId(publicId);
   }
 }
