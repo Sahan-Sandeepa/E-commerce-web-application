@@ -6,9 +6,7 @@ import org.jilt.Builder;
 import java.util.List;
 
 @Builder
-public record RestOrderedItemRead(long quantity,
-                                  double price,
-                                  String name) {
+public record RestOrderedItemRead(long quantity, double price, String name) {
 
   public static RestOrderedItemRead from(OrderedProduct orderedProduct) {
     return RestOrderedItemReadBuilder.restOrderedItemRead()

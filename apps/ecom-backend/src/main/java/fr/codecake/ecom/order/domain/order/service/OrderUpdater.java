@@ -6,6 +6,7 @@ import fr.codecake.ecom.order.domain.order.aggregate.OrderProductQuantityBuilder
 import fr.codecake.ecom.order.domain.order.aggregate.OrderedProduct;
 import fr.codecake.ecom.order.domain.order.aggregate.StripeSessionInformation;
 import fr.codecake.ecom.order.domain.order.repository.OrderRepository;
+import fr.codecake.ecom.product.domain.vo.PublicId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +30,15 @@ public class OrderUpdater {
     List<OrderProductQuantity> orderProductQuantities = new ArrayList<>();
     for (OrderedProduct orderedProduct : orderedProducts) {
       OrderProductQuantity orderProductQuantity = OrderProductQuantityBuilder.orderProductQuantity()
-        .productPublicId(orderedProduct.getProductPublicId())
-        .quantity(orderedProduct.getQuantity())
-        .build();
+          .productPublicId(orderedProduct.getProductPublicId())
+          .quantity(orderedProduct.getQuantity())
+          .build();
       orderProductQuantities.add(orderProductQuantity);
     }
     return orderProductQuantities;
+  }
+
+  public void deleteOrderByPublicId(PublicId orderPublicId) {
+    orderRepository.deleteByPublicId(orderPublicId);
   }
 }

@@ -21,4 +21,5 @@ public interface JpaOrderRepository extends JpaRepository<OrderEntity, Long> {
 
   Page<OrderEntity> findAllByUserPublicId(UUID userPublicId, Pageable pageable);
 
+  Optional<OrderEntity> findByPublicId(UUID publicId);
 }
