@@ -25,17 +25,11 @@
       <div class="transition-transform transform hover:-translate-y-1 duration-900 mt-0 p-0">
         <ecom-product-card [product]="product"></ecom-product-card>
       </div>
-      <div class="transition-transform transform hover:-translate-y-1 duration-900 mt-0 p-0">
-        <ecom-product-card [product]="product"></ecom-product-card>
-      </div>
-      <div class="transition-transform transform hover:-translate-y-1 duration-900 mt-0 p-0">
-        <ecom-product-card [product]="product"></ecom-product-card>
-      </div>
       }
     </div>
 
     <!-- Second grid: 4 items -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       @for (product of filteredProductsQuery.data().content.slice(3); track product.publicId) {
       <div class="transition-transform transform hover:-translate-y-1 duration-200">
         <ecom-product-card [product]="product"></ecom-product-card>

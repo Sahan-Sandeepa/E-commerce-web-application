@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -49,16 +49,8 @@ export class ApiService {
         return this.http.get(`${this.baseUrl}/products-shop/related?publicId=${publicId}`);
     }
 
-    filterProducts(categoryId: string, productSizes?: string[]): Observable<any> {
-        let params = new HttpParams().set('categoryId', categoryId);
-
-        if (productSizes) {
-            productSizes.forEach(size => {
-                params = params.append('productSizes', size);
-            });
-        }
-
-        return this.http.get(`${this.baseUrl}/products-shop/filter`, { params });
+    filterProducts(categoryId: string): Observable<any> {
+        return this.http.get(`${this.baseUrl}/products-shop/filter?page=0&size=20&sort=createdDate,desc&categoryId=${categoryId}`);
     }
 
     // === PRODUCTS ADMIN ===

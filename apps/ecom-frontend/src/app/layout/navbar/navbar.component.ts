@@ -1,11 +1,12 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Component, HostListener, inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { FaIconComponent, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 import { ClickOutside } from 'ngxtension/click-outside';
 import { lastValueFrom } from 'rxjs';
 import { Oauth2Service } from '../../auth/oauth2.service';
+import { STATIC_CATEGORY_IDS } from '../../shared/assets/category-mapping-constant';
 import { DropdownComponent } from '../../shared/assets/dropdown.component';
 import { UserProductService } from '../../shared/service/user-product.service';
 import { CartService } from '../../shop/cart.service';
@@ -20,6 +21,7 @@ import { CartService } from '../../shop/cart.service';
 })
 export class NavbarComponent implements OnInit {
   private platformId = inject(PLATFORM_ID);
+  private readonly router = inject(Router);
   oauth2Service = inject(Oauth2Service);
   productService = inject(UserProductService);
   cartService = inject(CartService);
@@ -32,7 +34,7 @@ export class NavbarComponent implements OnInit {
   connectedUserQuery = this.oauth2Service.connectedUserQuery;
   currentTheme: 'light' | 'dark' = 'light';
   currentOpenDropdown: string | null = null;
-
+  categories = ['All', ...Object.keys(STATIC_CATEGORY_IDS)];
 
   categoryQuery = injectQuery(() => ({
     queryKey: ['categories'],
@@ -161,5 +163,11 @@ export class NavbarComponent implements OnInit {
 
   isDropdownOpen(label: string): boolean {
     return this.currentOpenDropdown === label;
+  }
+
+  fetchProductsByCategory(label: string) {
+    const categoryId = STATIC_CATEGORY_IDS[label as keyof typeof STATIC_CATEGORY_IDS];
+    const queryParams = label === 'All' ? {} : { category: categoryId };
+    this.router.navigate(['/'], { queryParams });
   }
 }

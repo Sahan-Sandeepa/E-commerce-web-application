@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Product } from '../admin/model/product.model';
 import { FooterComponent } from '../layout/footer/footer.component';
 import { ProductCardSkeletonComponent } from '../shared/assets/card-skeleton.component';
+import { STATIC_CATEGORY_IDS } from '../shared/assets/category-mapping-constant';
 import { ApiService } from '../shared/service/api.service';
 import { ProductCardComponent } from '../shop/product-card/product-card.component';
 
@@ -21,10 +22,12 @@ import { ProductCardComponent } from '../shop/product-card/product-card.componen
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent {
+
+export class HomeComponent implements OnInit {
   private readonly meta = inject(Meta);
   private readonly title = inject(Title);
   private readonly apiService = inject(ApiService);
+  private route = inject(ActivatedRoute)
 
   productsResource = signal<Product[]>([]);
   loading = signal(true);
@@ -43,22 +46,41 @@ export class HomeComponent {
       content:
         "Your Modern Ecommerce — A minimalist, responsive, Angular + TailwindCSS template for professional shops.",
     });
-    this.loadProducts();
   }
 
-
-
-  private loadProducts() {
-    this.apiService.getProducts().subscribe({
-      next: (products) => {
-        this.productsResource.set(products);
-        this.loading.set(false);
-      },
-      error: (err) => {
-        console.error(err);
-        this.loading.set(false);
-      },
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      const categoryName = params['category'] as keyof typeof STATIC_CATEGORY_IDS;
+      const categoryId = STATIC_CATEGORY_IDS[categoryName] || null;
+      this.loadProducts(categoryId);
     });
+  }
+
+  loadProducts(categoryId: string | null): void {
+    this.loading.set(true);
+    if (!categoryId) {
+      this.apiService.getFeaturedProducts().subscribe({
+        next: (res) => {
+          this.productsResource.set(res.content || []);
+          this.loading.set(false);
+        },
+        error: (err) => {
+          console.error('[API Error] Featured:', err);
+          this.loading.set(false);
+        },
+      });
+    } else {
+      this.apiService.filterProducts(categoryId).subscribe({
+        next: (res) => {
+          this.productsResource.set(res.content || []);
+          this.loading.set(false);
+        },
+        error: (err) => {
+          console.error('[API Error] Filtered:', err);
+          this.loading.set(false);
+        },
+      });
+    }
   }
 
   showMore() {
@@ -75,5 +97,13 @@ export class HomeComponent {
 
   isLoading() {
     return this.loading();
+  }
+
+  trackByFn(index: number, item: any): any {
+    return index;
+  }
+
+  trackByProductId(index: number, product: Product): string {
+    return product.publicId;
   }
 }

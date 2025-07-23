@@ -8,36 +8,35 @@
         routerLink="/">
         <div class="border p-2 rounded-xl bg-secondary text-white">SparkleShelf</div>
       </a>
-
       <!-- Navigation Links Desktop -->
       <nav class="hidden lg:flex items-center gap-x-6 text-sm font-medium dark:text-gray-200">
-        <app-dropdown label="All" [isOpen]="isDropdownOpen('All')" (toggle)="toggleDropdown('All', $event)">
-          <li><a class="block px-4 py-1 hover:text-primary">All Item 1</a></li>
-          <li><a class="block px-4 py-1 hover:text-primary">All Item 2</a></li>
-        </app-dropdown>
+        <span class="cursor-pointer hover:text-primary transition-colors" [routerLink]="['/']"
+          [queryParams]="{ category: 'All' }" queryParamsHandling="merge">
+          All
+        </span>
 
-        <app-dropdown label="Men" [isOpen]="isDropdownOpen('Men')" (toggle)="toggleDropdown('Men', $event)">
-          <li><a class="block px-4 py-1 hover:text-primary">Men Item 1</a></li>
-          <li><a class="block px-4 py-1 hover:text-primary">Men Item 2</a></li>
-        </app-dropdown>
+        <span class="cursor-pointer hover:text-primary transition-colors" [routerLink]="['/']"
+          [queryParams]="{ category: 'Men' }" queryParamsHandling="merge">
+          Men
+        </span>
 
-        <app-dropdown label="Women" [isOpen]="isDropdownOpen('Women')" (toggle)="toggleDropdown('Women', $event)">
-          <li><a class="block px-4 py-1 hover:text-primary">Women Item 1</a></li>
-          <li><a class="block px-4 py-1 hover:text-primary">Women Item 2</a></li>
-        </app-dropdown>
+        <span class="cursor-pointer hover:text-primary transition-colors" [routerLink]="['/']"
+          [queryParams]="{ category: 'Women' }" queryParamsHandling="merge">
+          Women
+        </span>
 
-        <app-dropdown label="Jewelry" [isOpen]="isDropdownOpen('Jewelry')" (toggle)="toggleDropdown('Jewelry', $event)">
-          <li><a class="block px-4 py-1 hover:text-primary">Jewelry Item 1</a></li>
-          <li><a class="block px-4 py-1 hover:text-primary">Jewelry Item 2</a></li>
-        </app-dropdown>
+        <span class="cursor-pointer hover:text-primary transition-colors" [routerLink]="['/']"
+          [queryParams]="{ category: 'Jewellery' }" queryParamsHandling="merge">
+          Jewellery
+        </span>
 
-        <app-dropdown label="Electronics" [isOpen]="isDropdownOpen('Electronics')"
-          (toggle)="toggleDropdown('Electronics', $event)">
-          <li><a class="block px-4 py-1 hover:text-primary">Electronics Item 1</a></li>
-          <li><a class="block px-4 py-1 hover:text-primary">Electronics Item 2</a></li>
-        </app-dropdown>
+        <span class="cursor-pointer hover:text-primary transition-colors" [routerLink]="['/']"
+          [queryParams]="{ category: 'Electronics' }" queryParamsHandling="merge">
+          Electronics
+        </span>
 
-        <app-dropdown label="Products" [isOpen]="isDropdownOpen('Products')"
+        <!-- Keep admin dropdowns as before -->
+        <app-dropdown label="Products" *ngIf="isAdmin" [isOpen]="isDropdownOpen('Products')"
           (toggle)="toggleDropdown('Products', $event)">
           <ng-container *ngIf="hasCategories; else noCategories">
             <li *ngFor="let category of categoryQuery.data()?.content">
