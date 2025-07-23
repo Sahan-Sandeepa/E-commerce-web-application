@@ -68,7 +68,7 @@
         (click)="toggleUserDropdown($event)">
         <div class="cursor-pointer flex items-center">
           <ng-container *ngIf="isConnected() && connectedUserQuery?.data()?.email !== null; else guest">
-            <img [src]="connectedUserQuery?.data()?.email" alt="user-avatar" class="w-10 h-10 rounded-full border" />
+            <img [src]="connectedUserQuery?.data()?.imageUrl" alt="user-avatar" class="w-10 h-10 rounded-full border" />
           </ng-container>
           <ng-template #guest>
             <fa-icon [icon]="['fas', 'user']" class="w-6 h-6 text-gray-600 dark:text-gray-400"></fa-icon>
