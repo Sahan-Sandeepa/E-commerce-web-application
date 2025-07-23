@@ -67,7 +67,7 @@ export class ApiService {
     }
 
     getProducts(): Observable<Product[]> {
-        return this.http.get<Page<Product>>('/api/products-shop/featured').pipe(
+        return this.http.get<Page<Product>>(`${this.baseUrl}/products-shop/featured`).pipe(
             map((page) => page.content)
         );
     }
