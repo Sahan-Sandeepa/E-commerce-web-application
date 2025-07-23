@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, Input, input } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCartShopping, faEye, faHeart } from '@fortawesome/free-solid-svg-icons';
@@ -16,7 +16,7 @@ import { CartService } from '../cart.service';
   styleUrl: './product-card.component.scss',
 })
 export class ProductCardComponent {
-  private readonly cartService = inject(CartService); //injected
+  private readonly cartService = inject(CartService);
   private readonly favoriteItemsLocalStorageService = inject(FavoriteItemsLocalStorageService);
   private readonly router = inject(Router);
   oauth2Service = inject(Oauth2Service);
@@ -28,9 +28,8 @@ export class ProductCardComponent {
 
   product = input.required<Product>();
 
-  //Check if this product is already in the cart
   isInCart = computed(() => {
-    const cart = this.cartService['addedToCart$'].getValue(); // or use a signal version later
+    const cart = this.cartService['addedToCart$'].getValue();
     return cart.some(item => item.publicId === this.product().publicId);
   });
 

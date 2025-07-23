@@ -1,47 +1,15 @@
-<!-- <section class="hero min-h-[70vh] rounded-xl relative overflow-hidden"
-  style="background-image: url(./home/hero.webp); background-size: cover; background-position: center">
-  <div class="absolute inset-0 bg-black/40"></div>
-  <div class="relative z-10 hero-content justify-start text-white w-full px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto">
-    <div class="max-w-lg">
-      <h1 class="mb-4 text-4xl sm:text-6xl font-extrabold leading-tight">
-        Your Modern Ecommerce
-      </h1>
-      <p class="mb-6 text-lg sm:text-2xl">
-        Discover the latest collections with exclusive offers.
-      </p>
-      <button class="btn bg-primary text-white px-8 py-3 rounded-lg hover:bg-primary/90 transition"
-        routerLink="/products">
-        Shop Now
-      </button>
-    </div>
-  </div>
-</section> -->
-
-<!-- <section class="w-full py-14 sm:py-20 bg-base-100">
-  <h2 class="text-3xl sm:text-4xl font-extrabold text-center text-gray-800 mb-10">
-    Featured Products
-  </h2>
-</section> -->
-
 <section class="w-full mt-10 pb-16 px-6">
-  @if (isLoading()) {
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-    @for (item of [1, 2, 3, 4, 5, 6, 7, 8, 9]; track item) {
-    <ecom-product-card-skeleton />
-    }
-  </div>
-  } @else {
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-    @for (product of visibleProducts; track product.publicId) {
-    <ecom-product-card [product]="product" />
-    }
+  <div *ngIf="isLoading(); else showProducts" class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+    <ecom-product-card-skeleton *ngFor="let item of [1,2,3,4,5,6,7,8,9]; trackBy: trackByFn"></ecom-product-card-skeleton>
   </div>
 
-  @if (isShowMoreVisible()) {
-  <div class="flex justify-center mt-6">
-    <button (click)="showMore()" class="btn btn-primary px-6">
-      Show More
-    </button>
-  </div>
-  } }
+  <ng-template #showProducts>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <ecom-product-card *ngFor="let product of visibleProducts; trackBy: trackByProductId" [product]="product"></ecom-product-card>
+    </div>
+
+    <div *ngIf="isShowMoreVisible()" class="flex justify-center mt-6">
+      <button (click)="showMore()" class="btn btn-primary px-6">Show More</button>
+    </div>
+  </ng-template>
 </section>
