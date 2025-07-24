@@ -37,7 +37,6 @@ export class FavoriteItemsLocalStorageService {
   }
 
   removeItem(item: Product) {
-    // Use publicId for identification, matching your Product model
     const newItems = this.favoriteItems().filter(i => i.publicId !== item.publicId);
     this.saveItems(newItems);
   }
@@ -51,6 +50,10 @@ export class FavoriteItemsLocalStorageService {
       }
     });
     this.saveItems(newItems);
+  }
+
+  getAllItems(): Product[] {
+    return this.favoriteItems();
   }
 
   clearItems() {

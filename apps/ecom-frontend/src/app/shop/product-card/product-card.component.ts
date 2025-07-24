@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, Input, input } from '@angular/core';
+import { Component, computed, EventEmitter, inject, input, Output } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCartShopping, faEye, faHeart } from '@fortawesome/free-solid-svg-icons';
@@ -20,12 +20,12 @@ export class ProductCardComponent {
   private readonly favoriteItemsLocalStorageService = inject(FavoriteItemsLocalStorageService);
   private readonly router = inject(Router);
   oauth2Service = inject(Oauth2Service);
+  @Output() favoriteToggled = new EventEmitter<Product>();
 
   connectedUserQuery = this.oauth2Service.connectedUserQuery;
   faHeart = faHeart;
   faEye = faEye;
   faCartShopping = faCartShopping;
-
   product = input.required<Product>();
 
   isInCart = computed(() => {
@@ -55,14 +55,6 @@ export class ProductCardComponent {
     return this.favoriteItemsLocalStorageService.checkItemAlreadyExist(this.product().publicId);
   }
 
-  toggleFavoriteItem(): void {
-    if (this.checkFavoriteItemAlreadyExist()) {
-      this.favoriteItemsLocalStorageService.removeItem(this.product());
-    } else {
-      this.favoriteItemsLocalStorageService.addItem(this.product());
-    }
-  }
-
   onClickNavigate(): void {
     this.router.navigate(['product', this.product().publicId]);
   }
@@ -73,5 +65,24 @@ export class ProductCardComponent {
 
   showLoginFailedMessage(): void {
     console.warn('Login failed. Please try again.');
+  }
+
+  toggleFavoriteItem(): void {
+    if (this.checkFavoriteItemAlreadyExist()) {
+      this.favoriteItemsLocalStorageService.removeItem(this.product());
+    } else {
+      this.favoriteItemsLocalStorageService.addItem(this.product());
+    }
+
+    this.favoriteToggled.emit(this.product());
+  }
+
+  get isFavorite(): boolean {
+    return this.favoriteItemsLocalStorageService.checkItemAlreadyExist(this.product().publicId);
+  }
+
+  getFavoriteIconClass(): string {
+    if (!this.isFavorite) return 'text-gray-500';
+    return 'text-red-400';
   }
 }

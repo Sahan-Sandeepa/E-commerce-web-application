@@ -7,12 +7,13 @@ import { CreateProductComponent } from './admin/product/create-product/create-pr
 import { CallbackComponent } from './auth/callback.component';
 import { LoginComponent } from './auth/loginComponent';
 import { roleCheckGuard } from './auth/role-check.guard';
+import { HomeComponent } from './home/home.component';
 import { CartSuccessComponent } from './shop/cart-success/cart-success.component';
 import { CartComponent } from './shop/cart/cart.component';
+import { FavouriteComponent } from './shop/fav-product/favourite.component';
 import { ProductDetailComponent } from './shop/product-detail/product-detail.component';
 import { ProductsComponent } from './shop/products/products.component';
 import { UserOrdersComponent } from './user/user-orders/user-orders.component';
-import { HomeComponent } from './home/home.component';
 
 export const appRoutes: Route[] = [
   {
@@ -67,6 +68,10 @@ export const appRoutes: Route[] = [
   {
     path: 'product/:publicId',
     component: ProductDetailComponent,
+  },
+  {
+    path: 'favourites',
+    component: FavouriteComponent
   },
   {
     path: 'products',

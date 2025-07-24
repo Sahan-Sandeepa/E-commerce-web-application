@@ -11,27 +11,27 @@
       <!-- Navigation Links Desktop -->
       <nav class="hidden lg:flex items-center gap-x-6 text-sm font-medium dark:text-gray-200">
         <span class="cursor-pointer hover:text-primary transition-colors" [routerLink]="['/']"
-          [queryParams]="{ category: 'All' }" queryParamsHandling="merge">
+          [queryParams]="{ category: 'All' }" queryParamsHandling="merge" title="All Items">
           All
         </span>
 
         <span class="cursor-pointer hover:text-primary transition-colors" [routerLink]="['/']"
-          [queryParams]="{ category: 'Men' }" queryParamsHandling="merge">
+          [queryParams]="{ category: 'Men' }" queryParamsHandling="merge" title="Men's Items">
           Men
         </span>
 
         <span class="cursor-pointer hover:text-primary transition-colors" [routerLink]="['/']"
-          [queryParams]="{ category: 'Women' }" queryParamsHandling="merge">
+          [queryParams]="{ category: 'Women' }" queryParamsHandling="merge" title="Women's Items">
           Women
         </span>
 
         <span class="cursor-pointer hover:text-primary transition-colors" [routerLink]="['/']"
-          [queryParams]="{ category: 'Jewellery' }" queryParamsHandling="merge">
+          [queryParams]="{ category: 'Jewellery' }" queryParamsHandling="merge" title="Jewellery Items">
           Jewellery
         </span>
 
         <span class="cursor-pointer hover:text-primary transition-colors" [routerLink]="['/']"
-          [queryParams]="{ category: 'Electronics' }" queryParamsHandling="merge">
+          [queryParams]="{ category: 'Electronics' }" queryParamsHandling="merge" title="Electronics Items">
           Electronics
         </span>
 
@@ -53,9 +53,9 @@
 
         <app-dropdown *ngIf="isAdmin" label="Admin" [isOpen]="isDropdownOpen('Admin')"
           (toggle)="toggleDropdown('Admin', $event)">
-          <li><a routerLink="/admin/categories/list" class="block px-4 py-1 hover:text-primary">Categories</a></li>
-          <li><a routerLink="/admin/products/list" class="block px-4 py-1 hover:text-primary">Products</a></li>
-          <li><a routerLink="/admin/orders/list" class="block px-4 py-1 hover:text-primary">Orders</a></li>
+          <li><a routerLink="/admin/categories/list" class="block px-4 py-1 hover:text-primary" title="All Categories">Categories</a></li>
+          <li><a routerLink="/admin/products/list" class="block px-4 py-1 hover:text-primary" title="All Products">Products</a></li>
+          <li><a routerLink="/admin/orders/list" class="block px-4 py-1 hover:text-primary" title="All Orders">Orders</a></li>
         </app-dropdown>
       </nav>
     </div>
@@ -78,26 +78,33 @@
           class="absolute top-full mt-2 right-0 bg-white dark:bg-gray-800 text-black dark:text-white rounded shadow-lg p-2 w-48 z-20 transition-all">
           <li *ngIf="isConnected()">
             <a routerLink="/users/orders" (click)="onUserDropdownItemClick()"
-              class="block px-4 py-1 hover:text-primary">My Orders</a>
+              class="block px-4 py-1 hover:text-primary" title="View my orders">My Orders</a>
           </li>
           <li *ngIf="isConnected()">
             <button (click)="logout(); onUserDropdownItemClick()"
-              class="block w-full text-left px-4 py-1 hover:text-primary">
+              class="block w-full text-left px-4 py-1 hover:text-primary" title="Logout from your account">
               Logout
             </button>
           </li>
           <li *ngIf="!isConnected()">
             <button (click)="login(); onUserDropdownItemClick()"
-              class="block w-full text-left px-4 py-1 hover:text-primary">
+              class="block w-full text-left px-4 py-1 hover:text-primary" title="Login to your account">
               Login
             </button>
           </li>
         </ul>
       </div>
 
+      <!-- Favorites Icon -->
+      <div class="relative">
+        <a routerLink="/favourites" class="btn btn-sm btn-outline flex items-center gap-2" title="Favourite Items">
+          <fa-icon [icon]="['fas', 'heart']" class="text-red-500 dark:text-red-400"></fa-icon>
+        </a>
+      </div>
+
       <!-- Cart Icon -->
       <div class="relative">
-        <a routerLink="/cart" class="relative">
+        <a routerLink="/cart" class="relative" title="Cart Items">
           <fa-icon [icon]="['fas', 'cart-shopping']" class="w-6 h-6 text-gray-600 dark:text-gray-400"></fa-icon>
           <span *ngIf="cartItemQuantity() >= 1" class="absolute -top-2 -right-2 badge badge-primary text-xs">
             {{ cartItemQuantity() }}
