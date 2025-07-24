@@ -26,13 +26,9 @@ export class CartComponent implements OnInit {
   stripeService = inject(StripeService);
 
   cart: Array<CartItem> = [];
-
   platformId = inject(PLATFORM_ID);
-
   labelCheckout = 'Login to checkout';
-
   action: 'login' | 'checkout' = 'login';
-
   isInitPaymentSessionLoading = false;
 
   cartQuery = injectQuery(() => ({
