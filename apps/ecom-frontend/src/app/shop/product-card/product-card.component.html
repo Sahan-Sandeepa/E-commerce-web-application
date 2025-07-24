@@ -29,9 +29,8 @@
             <fa-icon [icon]="faEye" class="text-gray-600 dark:text-gray-300"></fa-icon>
           </button>
           <button (click)="toggleFavoriteItem()"
-            [ngClass]="checkFavoriteItemAlreadyExist() ? 'btn btn-sm btn-primary' : 'btn btn-sm'" class="tooltip"
-            data-tip="Favorite">
-            <fa-icon [icon]="faHeart"></fa-icon>
+            [ngClass]="{'btn btn-sm': true,'btn-error': isFavorite,'tooltip': true}">
+            <fa-icon [icon]="faHeart" class="text-lg heart-animate" [ngClass]="getFavoriteIconClass()"></fa-icon>
           </button>
         </div>
         <div>

@@ -1,11 +1,14 @@
 <section class="w-full mt-10 pb-16 px-6">
   <div *ngIf="isLoading(); else showProducts" class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-    <ecom-product-card-skeleton *ngFor="let item of [1,2,3,4,5,6,7,8,9]; trackBy: trackByFn"></ecom-product-card-skeleton>
+    <div class="flex justify-center items-center w-full py-10">
+      <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-opacity-50"></div>
+    </div>
   </div>
 
   <ng-template #showProducts>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-      <ecom-product-card *ngFor="let product of visibleProducts; trackBy: trackByProductId" [product]="product"></ecom-product-card>
+      <ecom-product-card *ngFor="let product of visibleProducts; trackBy: trackByProductId"
+        [product]="product"></ecom-product-card>
     </div>
 
     <div *ngIf="isShowMoreVisible()" class="flex justify-center mt-6">

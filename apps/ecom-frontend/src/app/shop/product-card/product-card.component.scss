@@ -26,4 +26,12 @@
   .card {
     margin-top: -1rem;
   }
+
+  .heart-animate {
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .heart-animate:hover {
+    transform: scale(1.2);
+  }
 }

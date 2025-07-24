@@ -13,16 +13,13 @@ import java.util.UUID;
 public class Order {
 
   private OrderStatus status;
-
   private User user;
-
   private String stripeId;
-
   private PublicId publicId;
-
   private List<OrderedProduct> orderedProducts;
 
-  public Order(OrderStatus status, User user, String stripeId, PublicId publicId, List<OrderedProduct> orderedProducts) {
+  public Order(OrderStatus status, User user, String stripeId, PublicId publicId,
+      List<OrderedProduct> orderedProducts) {
     this.status = status;
     this.user = user;
     this.stripeId = stripeId;
@@ -51,17 +48,17 @@ public class Order {
   }
 
   public static Order create(User connectedUser, List<OrderedProduct> orderedProducts,
-                       StripeSessionId stripeSessionId) {
+      StripeSessionId stripeSessionId) {
     return OrderBuilder.order()
-      .publicId(new PublicId(UUID.randomUUID()))
-      .user(connectedUser)
-      .status(OrderStatus.PENDING)
-      .orderedProducts(orderedProducts)
-      .stripeId(stripeSessionId.value())
-      .build();
+        .publicId(new PublicId(UUID.randomUUID()))
+        .user(connectedUser)
+        .status(OrderStatus.PENDING)
+        .orderedProducts(orderedProducts)
+        .stripeId(stripeSessionId.value())
+        .build();
   }
 
   public void validatePayment() {
-    this.status =  OrderStatus.PAID;
+    this.status = OrderStatus.PAID;
   }
 }
