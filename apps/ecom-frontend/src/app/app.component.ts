@@ -2,9 +2,9 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FaConfig, FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faFacebook, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faInstagram, faLinkedin, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { faCircleCheck as farCircleCheck } from '@fortawesome/free-regular-svg-icons';
-import { faBars, faCartShopping, faCheck, faCheckCircle, faCircleExclamation, faHeart, faMoon, faSun, faTruckFast, faUser, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faBuilding, faCartShopping, faCheck, faCheckCircle, faCircleExclamation, faCircleQuestion, faEnvelopeOpenText, faHeart, faMoon, faScaleBalanced, faSun, faTruckFast, faUser, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Oauth2Service } from './auth/oauth2.service';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './layout/footer/footer.component';
@@ -47,21 +47,14 @@ export class AppComponent implements OnInit {
   private initFontAwesome() {
     this.faConfig.defaultPrefix = 'fas';
     this.faIconLibrary.addIcons(
-      faCartShopping,
-      faTruckFast,
-      faTwitter,
-      faYoutube,
-      faFacebook,
-      faUser,
-      faXmark,
-      farCircleCheck,
-      faBars,
-      faMoon,
-      faSun,
-      faCircleExclamation,
-      faCheck,
-      faCheckCircle,
-      faHeart
+      faCartShopping, faTruckFast, faTwitter,
+      faYoutube, faFacebook, faUser,
+      faXmark, farCircleCheck, faBars,
+      faMoon, faSun, faCircleExclamation,
+      faCheck, faCheckCircle, faHeart,
+      faTwitter, faFacebook, faInstagram,
+      faLinkedin, faTruckFast, faCircleQuestion,
+      faEnvelopeOpenText, faBuilding, faScaleBalanced
     );
   }
 }

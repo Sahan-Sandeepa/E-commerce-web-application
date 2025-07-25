@@ -1,54 +1,86 @@
-<footer class="border-t border-t-base-300 pt-10 pb-6 mb-4 max-w-7xl mx-auto">
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 px-6 md:px-0">
-    <nav>
-      <h6 class="footer-title">Help</h6>
-      <ul class="space-y-1 text-sm">
-        <li><a routerLink="/shipping" class="link-hover">Shipping</a></li>
-        <li><a routerLink="/returns" class="link-hover">Returns + Exchanges</a></li>
-        <li><a routerLink="/faq" class="link-hover">FAQ</a></li>
-        <li><a routerLink="/compare" class="link-hover">Compare</a></li>
+<footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 pt-10 pb-6">
+  <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+
+    <!-- Help -->
+    <div>
+      <h6 class="text-lg font-semibold mb-4 flex items-center gap-2">
+        <fa-icon [icon]="['fas', 'circle-question']"></fa-icon> Help
+      </h6>
+      <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+        <li><a routerLink="/shipping" class="hover:text-primary cursor-pointer">Shipping</a></li>
+        <li><a routerLink="/returns" class="hover:text-primary cursor-pointer">Returns & Exchanges</a></li>
+        <li><a routerLink="/faq" class="hover:text-primary cursor-pointer">FAQ</a></li>
+        <li><a routerLink="/compare" class="hover:text-primary cursor-pointer">Compare</a></li>
       </ul>
-    </nav>
-    <nav>
-      <h6 class="footer-title">Company</h6>
-      <ul class="space-y-1 text-sm">
-        <li><a routerLink="/about" class="link-hover">About us</a></li>
-        <li><a routerLink="/contact" class="link-hover">Contact</a></li>
-        <li><a routerLink="/careers" class="link-hover">Jobs</a></li>
-        <li><a routerLink="/press" class="link-hover">Press kit</a></li>
+    </div>
+
+    <!-- Company -->
+    <div>
+      <h6 class="text-lg font-semibold mb-4 flex items-center gap-2">
+        <fa-icon [icon]="['fas', 'building']"></fa-icon> Company
+      </h6>
+      <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+        <li><a routerLink="/about" class="hover:text-primary cursor-pointer">About Us</a></li>
+        <li><a routerLink="/contact" class="hover:text-primary cursor-pointer">Contact</a></li>
+        <li><a routerLink="/careers" class="hover:text-primary cursor-pointer">Careers</a></li>
+        <li><a routerLink="/press" class="hover:text-primary cursor-pointer">Press</a></li>
       </ul>
-    </nav>
-    <nav>
-      <h6 class="footer-title">Legal</h6>
-      <ul class="space-y-1 text-sm">
-        <li><a routerLink="/terms" class="link-hover">Terms of use</a></li>
-        <li><a routerLink="/privacy" class="link-hover">Privacy policy</a></li>
-        <li><a routerLink="/cookies" class="link-hover">Cookie policy</a></li>
+    </div>
+
+    <!-- Legal -->
+    <div>
+      <h6 class="text-lg font-semibold mb-4 flex items-center gap-2">
+        <fa-icon [icon]="['fas', 'scale-balanced']"></fa-icon> Legal
+      </h6>
+      <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+        <li><a routerLink="/terms" class="hover:text-primary cursor-pointer">Terms of Use</a></li>
+        <li><a routerLink="/privacy" class="hover:text-primary cursor-pointer">Privacy Policy</a></li>
+        <li><a routerLink="/cookies" class="hover:text-primary cursor-pointer">Cookie Policy</a></li>
       </ul>
-    </nav>
-    <aside class="flex flex-col gap-2">
-      <fa-icon class="pe-3 text-primary" [icon]="['fas', 'truck-fast']" size="3x"></fa-icon>
-      <p class="text-sm">
-        CodeCake Ltd.<br />
-        Providing modern eCommerce solutions
-      </p>
-    </aside>
+    </div>
+
+    <!-- Newsletter + Company Info -->
+    <div class="space-y-4">
+      <h6 class="text-lg font-semibold flex items-center gap-2">
+        <fa-icon [icon]="['fas', 'envelope-open-text']"></fa-icon> Subscribe
+      </h6>
+      <p class="text-sm text-gray-600 dark:text-gray-400">Get latest offers, product updates, and more!</p>
+      <div class="flex gap-2">
+        <input type="email" placeholder="Your email"
+          class="input input-sm w-full border dark:border-gray-600 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-sm" />
+        <button class="btn btn-sm btn-primary">Join</button>
+      </div>
+      <div class="flex items-center gap-2 mt-2 text-sm text-gray-500 dark:text-gray-400">
+        <fa-icon [icon]="['fas', 'truck-fast']" class="text-primary"></fa-icon>
+        <span>Fast & Reliable Delivery</span>
+      </div>
+    </div>
   </div>
 
-  <div class="flex flex-col md:flex-row justify-between items-center gap-4 mt-10 px-6 md:px-0">
-    <div class="flex gap-4">
-      <a href="#" aria-label="Twitter shop">
-        <fa-icon [icon]="['fab', 'twitter']" size="2x"></fa-icon>
-      </a>
-      <a href="#" aria-label="Youtube shop">
-        <fa-icon [icon]="['fab', 'youtube']" size="2x"></fa-icon>
-      </a>
-      <a href="#" aria-label="Facebook shop">
-        <fa-icon [icon]="['fab', 'facebook']" size="2x"></fa-icon>
-      </a>
-    </div>
-    <div class="text-center md:text-right text-sm">
-      <p>&copy;{{currentDate}} CodeCake E-Commerce. All rights reserved.</p>
+  <!-- Bottom Bar -->
+  <div class="border-t border-gray-200 dark:border-gray-700 mt-10 pt-6 px-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+
+      <!-- Socials -->
+      <div class="flex gap-5 text-gray-600 dark:text-gray-300">
+        <a href="#" aria-label="Twitter">
+          <fa-icon [icon]="['fab', 'twitter']" size="lg"></fa-icon>
+        </a>
+        <a href="#" aria-label="Instagram">
+          <fa-icon [icon]="['fab', 'instagram']" size="lg"></fa-icon>
+        </a>
+        <a href="#" aria-label="Facebook">
+          <fa-icon [icon]="['fab', 'facebook']" size="lg"></fa-icon>
+        </a>
+        <a href="#" aria-label="LinkedIn">
+          <fa-icon [icon]="['fab', 'linkedin']" size="lg"></fa-icon>
+        </a>
+      </div>
+
+      <!-- Copyright -->
+      <div class="text-sm text-center md:text-right text-gray-500 dark:text-gray-400">
+        <p>&copy; {{ currentDate }} SparkleShelf E-Commerce. All rights reserved.</p>
+      </div>
     </div>
   </div>
 </footer>
