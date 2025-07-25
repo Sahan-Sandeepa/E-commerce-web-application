@@ -4,7 +4,6 @@
     <p class="text-sm text-gray-500">Here's the list of your orders</p>
   </div>
 
-  <!-- ✅ Success Message Popup -->
   <div *ngIf="showAlert"
     class="flex items-center justify-between p-4 mb-4 text-sm text-green-700 bg-green-100 border border-green-200 rounded-lg shadow transition-all duration-300"
     role="alert">
@@ -17,7 +16,6 @@
 
   <hr class="border-gray-200 my-2" />
 
-  <!-- ✅ Success State -->
   @if (ordersQuery.isSuccess() && ordersQuery.data().content.length > 0) {
   <div class="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
     <table class="min-w-full divide-y divide-gray-200">
@@ -65,7 +63,6 @@
   </div>
   }
 
-  <!-- ⏳ Loading State -->
   @else if (ordersQuery.isPending()) {
   <div class="flex justify-center py-10">
     <span class="loading loading-spinner loading-lg text-gray-500"></span>
