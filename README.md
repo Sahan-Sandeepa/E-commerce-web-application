@@ -2,8 +2,6 @@
 
 Monorepo of the Ecommerce platform app.
 
-[Video tutorial](https://youtu.be/4npG3sAMT5I)
-
 ### Key Features:
 - 🛠️ Admin panel for products and categories 
 - 🔍✨ Filter engine
