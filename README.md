@@ -1,11 +1,18 @@
 # Ecommerce platform (fullstack project) Spring boot 3, Angular 18, Tailwind CSS, PostgreSQL, Kinde (2024)
 
-Monorepo of the Ecommerce platform app.
+Monorepo of the e-commerce platform app.
 
 ### Key Features:
-- 🛠️ Admin panel for products and categories 
+- 🛠️ Admin panel for products and categories
+- 💻📱 Fully responsive design optimised for mobile, tablet, and desktop.
 - 🔍✨ Filter engine
-- 🌐⚡ Angular SSR 
+- 🌐⚡ Angular SSR
+- ♻️ Angular Components: Modular structure with reusable Angular components.
+- 💅 TailwindCSS: Utility-first CSS framework for fast styling and leveraging with Daisy UI.
+- 🧾 Product Listings: Showcase products with detailed views.
+- 🛒 Shopping Cart: Add products to the cart, view items, and proceed to checkout.
+- 🛍️ Favourite Product: Favourite product, add and remove from favourite items.
+- 🌚🌝Light/Dark theme: Support Light mode and Dark mode by default.
 - 💳 Stripe integration
 - 🏢 Hexagonal architecture (Backend)
 
